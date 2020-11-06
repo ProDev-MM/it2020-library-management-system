@@ -1,36 +1,20 @@
-package com.mds.libraryMgmtSystem.entity;
+package com.mds.libraryMgmtSystem.pojo;
 
-import javax.persistence.*;
+public class LibrarianPojo {
+    Long id;
+    String name;
+    String email;
+    String address;
+    String phone;
+    String password;
 
-@Entity
-@Table(name = "Librarian")
-@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
-public class Librarian {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY,generator="seq")
-    private Long id;
-
-    @Column
-    private String name;
-
-    @Column
-    private String email;
-
-    @Column
-    private String address;
-
-    @Column
-    private String phone;
-
-    @Column
-    private String password;
-
-    @Enumerated(EnumType.STRING)
-    private Position position;
-
-    public enum Position{
-       Teacher, Clerk;
+    public LibrarianPojo(Long id, String name, String email, String address, String phone, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.password = password;
     }
 
     public Long getId() {
@@ -79,13 +63,5 @@ public class Librarian {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 }

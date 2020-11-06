@@ -91,4 +91,9 @@ public class BookController {
         return new BaseResponse(GlobalConstant.success, books,GlobalConstant.Message.success_message);
 
     }
+
+    @GetMapping(value="/book/search")
+    public List<Book> searchBook(String name,String author,String edition){
+        return bookService.bookSearch(name,author,edition);
+    }
 }

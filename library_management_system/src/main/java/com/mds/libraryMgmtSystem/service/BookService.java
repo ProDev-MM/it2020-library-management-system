@@ -36,4 +36,8 @@ public class BookService {
     public Collection<Book> saveAll(Collection<Book> books) {
         return  bookRepository.saveAll(books);
     }
+
+    public List<Book> bookSearch(String name, String author, String edition) {
+        return bookRepository.searchBook(name, author, edition);
+    }
 }
