@@ -13,7 +13,7 @@ public class GlobalConstant {
 
 
     public interface FolderLocation {
-        Integer LOCATION_NRC = 1;
+        Integer LOCATION_BOOK = 1;
         Integer LOCATION_PROFILE = 2;
 
 
@@ -21,7 +21,7 @@ public class GlobalConstant {
 
     public interface FolderName {
         String FOLDER_ROOT = "upload";
-        String  NRC = "NRC";
+        String  BOOKURL = "BOOKURL";
         String  PROFILE = "PROFILE";
         String FOLDER_OTHER = "other";
 
