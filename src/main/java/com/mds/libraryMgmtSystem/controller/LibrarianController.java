@@ -13,6 +13,7 @@ import java.util.List;
 import static java.lang.System.out;
 
 @RestController
+@CrossOrigin
 public class LibrarianController {
 
     @Autowired
