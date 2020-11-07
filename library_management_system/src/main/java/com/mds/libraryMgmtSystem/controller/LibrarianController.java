@@ -18,8 +18,7 @@ public class LibrarianController {
     @Autowired
     LibrarianService librarianService;
 
-//add controller
-
+    //New controller
     @GetMapping(value = "/librarians")
     public BaseResponse getLibrarian(){
         List<Librarian> librarian;
