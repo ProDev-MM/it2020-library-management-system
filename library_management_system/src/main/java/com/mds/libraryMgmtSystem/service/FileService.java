@@ -25,8 +25,8 @@ public class FileService {
 
         String nextFolder;
 
-        if (location.equals(GlobalConstant.FolderLocation.LOCATION_NRC)) {
-            nextFolder = GlobalConstant.FolderName.NRC;
+        if (location.equals(GlobalConstant.FolderLocation.LOCATION_BOOK)) {
+            nextFolder = GlobalConstant.FolderName.BOOKURL;
         } else if (location.equals(GlobalConstant.FolderLocation.LOCATION_PROFILE)) {
             nextFolder = GlobalConstant.FolderName.PROFILE;
         }
