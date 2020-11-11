@@ -18,10 +18,8 @@ public class Category {
     @Column
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "Category_Id")
-    private Collection<Book> books;
-
+    @Column(name = "book_id")
+    private Long bookId;
 
     public Long getId() {
         return id;
@@ -47,26 +45,13 @@ public class Category {
         this.description = description;
     }
 
-    public Collection<Book> getBooks() {
-        return books;
+
+    public Long getBookId() {
+        return bookId;
     }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", books=" + books +
-                '}';
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public void addBook(Book book) {
-        if (books==null) {
-            books = new ArrayList<Book>();
-        }
-        if (!books.contains(book)) {
-            books.add(book);
-        }
-    }
 }

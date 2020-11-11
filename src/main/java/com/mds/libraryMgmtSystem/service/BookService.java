@@ -21,20 +21,12 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
-    public Book addBook(Book book) {
-        return bookRepository.save(book);
-    }
-
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }
 
     public Book save(Book book) {
         return bookRepository.save(book);
-    }
-
-    public Collection<Book> saveAll(Collection<Book> books) {
-        return  bookRepository.saveAll(books);
     }
 
     public List<Book> bookSearch(String name, String author, String edition) {

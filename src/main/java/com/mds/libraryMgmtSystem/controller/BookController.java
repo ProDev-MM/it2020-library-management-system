@@ -1,13 +1,16 @@
 package com.mds.libraryMgmtSystem.controller;
 
+import com.mds.libraryMgmtSystem.entity.Category;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.pojo.BookPojo;
+import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -17,6 +20,9 @@ import static java.lang.System.out;
 public class BookController {
     @Autowired
     BookService bookService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping(value = "/books")
     public BaseResponse getBook(){
@@ -42,15 +48,19 @@ public class BookController {
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping(value = "/book")
-    public BaseResponse createBook(@RequestBody Book book){
-        try {
-            book = bookService.addBook(book);
-        }catch(Exception e) {
-            System.out.println("Error occur "+e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+    @PostMapping (value = "/book")
+    public Book createCategory(@RequestBody Book book){
+
+            Collection<Category> categories= book.getCategories();
+        if(categories !=null){
+            categories = categoryService.saveAll(categories);
         }
-        return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
+
+        for(Category category : categories){
+            book.addCategory(category);
+        }
+
+        return bookService.save(book);
 
     }
 

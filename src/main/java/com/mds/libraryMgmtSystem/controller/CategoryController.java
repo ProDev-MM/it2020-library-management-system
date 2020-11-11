@@ -48,31 +48,15 @@ public class CategoryController {
         return new BaseResponse(GlobalConstant.success, category, GlobalConstant.Message.success_message);
     }
 
-//    @PostMapping(value = "/category")
-//    public BaseResponse createCategory(@RequestBody Category category){
-//        try {
-//            category = categoryService.addCategory(category);
-//        }catch(Exception e) {
-//            System.out.println("Error occur "+e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//        return new BaseResponse(GlobalConstant.success, category, GlobalConstant.Message.success_message);
-//
-//    }
-
-    @PostMapping (value = "/category")
-    public Category createCategory(@RequestBody Category category){
-
-            Collection<Book> books= category.getBooks();
-        if(books !=null){
-            books = bookService.saveAll(books);
+    @PostMapping(value = "/category")
+    public BaseResponse createCategory(@RequestBody Category category){
+        try {
+            category = categoryService.addCategory(category);
+        }catch(Exception e) {
+            System.out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
-
-        for(Book book : books){
-            category.addBook(book);
-        }
-
-        return categoryService.save(category);
+        return new BaseResponse(GlobalConstant.success, category, GlobalConstant.Message.success_message);
 
     }
 

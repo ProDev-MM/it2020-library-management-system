@@ -1,6 +1,8 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "book")
@@ -29,8 +31,9 @@ public class Book {
     @Column
     private Double price;
 
-    @Column(name = "Category_Id")
-    private Long CategoryId;
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    private Collection<Category> categories;
 
     public Long getId() {
         return id;
@@ -88,12 +91,8 @@ public class Book {
         this.price = price;
     }
 
-    public Long getCategoryId() {
-        return CategoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        CategoryId = categoryId;
+    public Collection<Category> getCategories() {
+        return categories;
     }
 
     @Override
@@ -106,7 +105,16 @@ public class Book {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", price=" + price +
-                ", CategoryId=" + CategoryId +
+                ", categories=" + categories +
                 '}';
+    }
+
+    public void addCategory(Category category) {
+        if (categories==null) {
+            categories = new ArrayList<>();
+        }
+        if (!categories.contains(category)) {
+          categories.add(category);
+        }
     }
 }
