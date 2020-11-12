@@ -18,8 +18,6 @@ public class Category {
     @Column
     private String description;
 
-    @Column(name = "book_id")
-    private Long bookId;
 
     public Long getId() {
         return id;
@@ -43,15 +41,6 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-
-    public Long getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
     }
 
 }

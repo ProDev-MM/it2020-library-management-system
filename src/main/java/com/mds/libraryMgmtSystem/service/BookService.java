@@ -32,4 +32,8 @@ public class BookService {
     public List<Book> bookSearch(String name, String author, String edition) {
         return bookRepository.searchBook(name, author, edition);
     }
+
+    public Book addBook(Book book) {
+        return  bookRepository.save(book);
+    }
 }

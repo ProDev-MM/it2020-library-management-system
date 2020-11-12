@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.entity.Category;
+import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
@@ -48,19 +49,15 @@ public class BookController {
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping (value = "/book")
-    public Book createCategory(@RequestBody Book book){
-
-            Collection<Category> categories= book.getCategories();
-        if(categories !=null){
-            categories = categoryService.saveAll(categories);
+    @PostMapping(value = "/book")
+    public BaseResponse createBook(@RequestBody Book book){
+        try {
+            book = bookService.addBook(book);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
-
-        for(Category category : categories){
-            book.addCategory(category);
-        }
-
-        return bookService.save(book);
+        return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
 
     }
 

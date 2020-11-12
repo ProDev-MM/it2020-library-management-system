@@ -31,9 +31,9 @@ public class Book {
     @Column
     private Double price;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "book_id")
-    private Collection<Category> categories;
+    private Category categories;
 
     public Long getId() {
         return id;
@@ -91,8 +91,12 @@ public class Book {
         this.price = price;
     }
 
-    public Collection<Category> getCategories() {
+    public Category getCategories() {
         return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -107,14 +111,5 @@ public class Book {
                 ", price=" + price +
                 ", categories=" + categories +
                 '}';
-    }
-
-    public void addCategory(Category category) {
-        if (categories==null) {
-            categories = new ArrayList<>();
-        }
-        if (!categories.contains(category)) {
-          categories.add(category);
-        }
     }
 }
