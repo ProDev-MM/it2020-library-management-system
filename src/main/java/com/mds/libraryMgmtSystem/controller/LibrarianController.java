@@ -1,7 +1,9 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
+import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.entity.Librarian;
+import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibrarianService;
@@ -44,17 +46,28 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping(value = "/librarian")
-    public BaseResponse createLibrarian(@RequestBody Librarian librarian){
-        try {
-            librarian = librarianService.addLibrarian(librarian);
+    @PostMapping("/create/book")
+    public BaseResponse createStudent(@RequestBody Librarian librarian){
+        Librarian librarians;
+
+        try{
+            List<Librarian> lib = librarianService.findByEmail(librarian.getEmail());
+//            List<Student> stud = bookService.findByRollNo(student.getRollNo());
+            if(lib== null || !lib.isEmpty()) {
+                out.println("Already Email Exist");
+                return null;
+            }
+
+            librarians = librarianService.addLibrarian(librarian);
+
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
-        return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
 
+        return new BaseResponse(GlobalConstant.success, librarians,GlobalConstant.Message.success_message);
     }
+
 
     @DeleteMapping(value="/librarian/{id}")
     public BaseResponse deleteLibrarian(@PathVariable Long id){
@@ -74,8 +87,10 @@ public class LibrarianController {
 
         try{
             Librarian librarian = librarianService.findById(librarianPojo.getId());
+            List<Librarian> lib = librarianService.findByEmail(librarianPojo.getEmail());
 
-            if(librarian==null) {
+            if(librarian==null || lib== null || !lib.isEmpty()) {
+                out.println("Email Already Exists");
                 return null;
             }
             librarian.setName(librarianPojo.getName());
@@ -94,6 +109,17 @@ public class LibrarianController {
 
     }
 
+ //   @PostMapping(value = "/librarian")
+//    public BaseResponse createLibrarian(@RequestBody Librarian librarian){
+//        try {
+//            librarian = librarianService.addLibrarian(librarian);
+//        }catch(Exception e) {
+//            out.println("Error occur "+e.getMessage());
+//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+//        }
+//        return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
+//
+//    }
 
 
 }

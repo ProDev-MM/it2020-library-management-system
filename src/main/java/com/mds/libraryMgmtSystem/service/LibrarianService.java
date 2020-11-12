@@ -29,6 +29,10 @@ public class LibrarianService {
     }
 
     public Librarian save(Librarian librarian) {
-        return  librarianRepository.save(librarian);
+        return librarianRepository.save(librarian);
+    }
+
+    public List<Librarian> findByEmail(String email) {
+        return librarianRepository.findByEmail(email);
     }
 }

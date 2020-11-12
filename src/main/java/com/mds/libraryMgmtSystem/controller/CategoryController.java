@@ -1,6 +1,5 @@
 package com.mds.libraryMgmtSystem.controller;
 
-import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.entity.Category;
 import com.mds.libraryMgmtSystem.pojo.CategoryPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;

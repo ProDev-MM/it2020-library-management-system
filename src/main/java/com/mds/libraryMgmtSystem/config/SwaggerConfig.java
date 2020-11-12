@@ -25,7 +25,7 @@ public class SwaggerConfig{
         return new ApiInfoBuilder()
                 .title("Intern Test Project")
                 .description("Intern Test Project")
-                .contact(new Contact("Intern Test Project ", "https://swagger.io/tools/swagger-ui/", "naynyeintun@mytel.com.mm"))
+                .contact(new Contact("Intern Test Project ", "https://swagger.io/tools/swagger-ui/", "htetlwinaung999@gmail.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("1.0")

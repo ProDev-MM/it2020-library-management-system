@@ -29,7 +29,7 @@ public class Book {
     private String isbn;
 
     @Column
-    private Double price;
+    private String price;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -83,11 +83,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
