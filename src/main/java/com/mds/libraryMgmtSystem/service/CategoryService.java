@@ -1,5 +1,6 @@
 package com.mds.libraryMgmtSystem.service;
 
+import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.repository.CategoryRepository;
 import com.mds.libraryMgmtSystem.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
     public List<Category> getCategory() {
         return categoryRepository.findAll();
@@ -37,3 +41,4 @@ public class CategoryService {
         return categoryRepository.saveAll(categories);
     }
 }
+

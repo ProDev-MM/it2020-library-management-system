@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.repository;
 
 import com.mds.libraryMgmtSystem.entity.Book;
+import com.mds.libraryMgmtSystem.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             + "or l.edition like concat('%',concat(?3,'%'))")
 
     List<Book> searchBook(String name, String author, String edition);
+
+    @Query(value="select b.* from book b inner join category c on b.category_id = c.id where c.id = ?1", nativeQuery=true)
+    List<Book> findByCategoryId(Long id);
 }

@@ -1,8 +1,6 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity
 @Table(name = "book")
@@ -32,7 +30,7 @@ public class Book {
     private String price;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "category_id")
     private Category categories;
 
     public Long getId() {

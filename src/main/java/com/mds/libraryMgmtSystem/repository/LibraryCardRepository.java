@@ -1,10 +1,9 @@
 package com.mds.libraryMgmtSystem.repository;
 
-import com.mds.libraryMgmtSystem.entity.Book;
-import com.mds.libraryMgmtSystem.entity.Category;
+import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface LibraryCardRepository extends JpaRepository<LibraryCard, Long> {
 }

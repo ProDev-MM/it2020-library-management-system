@@ -1,7 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
-import com.mds.libraryMgmtSystem.entity.Category;
-import com.mds.libraryMgmtSystem.entity.Librarian;
+
 import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
@@ -12,8 +11,8 @@ import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -43,6 +42,18 @@ public class BookController {
         Book book;
         try{
             book = bookService.findById(id);
+        }catch(Exception e) {
+            System.out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value="/findByCategory/{id}")
+    public BaseResponse getByCategoryId(@PathVariable Long id){
+        List<Book> book;
+        try{
+            book =bookService.findByCategoryId(id);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
