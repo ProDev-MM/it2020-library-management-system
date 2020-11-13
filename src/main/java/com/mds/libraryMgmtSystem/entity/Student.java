@@ -5,7 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 @Entity
-@Table(name = "Student")
+@Table(name = "student")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
 public class Student {
     @Id
@@ -32,6 +32,10 @@ public class Student {
 
     @Column
     private String password;
+
+    @OneToOne
+    @JoinColumn(name = "libraryCard_id")
+    private LibraryCard libraryCard;
 
     public Long getId() {
         return id;
@@ -95,5 +99,13 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LibraryCard getLibraryCard() {
+        return libraryCard;
+    }
+
+    public void setLibraryCard(LibraryCard libraryCard) {
+        this.libraryCard = libraryCard;
     }
 }

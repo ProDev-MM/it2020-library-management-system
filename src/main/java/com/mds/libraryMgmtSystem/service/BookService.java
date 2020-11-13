@@ -40,4 +40,8 @@ public class BookService {
     public List<Book> findByCategoryId(Long id) {
         return bookRepository.findByCategoryId(id);
     }
+
+    public List<Book> findByShelfId(Long id) {
+        return bookRepository.findByShelfId(id);
+    }
 }

@@ -33,6 +33,10 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category categories;
 
+    @ManyToOne
+    @JoinColumn(name="shelf_id")
+    private Shelf shelves;
+
     public Long getId() {
         return id;
     }
@@ -97,6 +101,14 @@ public class Book {
         this.categories = categories;
     }
 
+    public Shelf getShelves() {
+        return shelves;
+    }
+
+    public void setShelves(Shelf shelves) {
+        this.shelves = shelves;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -106,8 +118,9 @@ public class Book {
                 ", edition='" + edition + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", price=" + price +
+                ", price='" + price + '\'' +
                 ", categories=" + categories +
+                ", shelves=" + shelves +
                 '}';
     }
 }

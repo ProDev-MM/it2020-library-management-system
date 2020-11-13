@@ -3,7 +3,7 @@ package com.mds.libraryMgmtSystem.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Shelf")
+@Table(name = "shelf")
 public class Shelf {
 
     @Id

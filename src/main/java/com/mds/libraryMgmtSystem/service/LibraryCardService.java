@@ -12,7 +12,7 @@ public class LibraryCardService {
     @Autowired
     LibraryCardRepository libraryCardRepository;
 
-    public List<LibraryCard> getLibraryCards() {
+    public List<LibraryCard> getLibraryCard() {
         return libraryCardRepository.findAll();
     }
 

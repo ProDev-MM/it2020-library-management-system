@@ -64,7 +64,7 @@ public class ShelfController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-//
+
     @PutMapping (value = "/shelf")
     public BaseResponse updateStudent(@RequestBody ShelfPojo shelfPojo) {
         Shelf shelves;

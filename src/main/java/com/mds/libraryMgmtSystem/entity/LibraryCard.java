@@ -3,7 +3,7 @@ package com.mds.libraryMgmtSystem.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "LibraryCard")
+@Table(name = "library_card")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
 public class LibraryCard {
     @Id

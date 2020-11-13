@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "category")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
 public class Category {
     @Id

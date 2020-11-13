@@ -61,6 +61,18 @@ public class BookController {
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
 
+    @GetMapping(value="/findByShelf/{id}")
+    public BaseResponse getByShelfId(@PathVariable Long id){
+        List<Book> book;
+        try{
+            book =bookService.findByShelfId(id);
+        }catch(Exception e) {
+            System.out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
+    }
+
     @PostMapping(value = "/book")
     public BaseResponse createBook(@RequestBody Book book){
         try {

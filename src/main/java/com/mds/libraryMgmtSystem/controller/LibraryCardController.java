@@ -18,10 +18,10 @@ public class LibraryCardController {
     LibraryCardService libraryCardService;
 
     @GetMapping(value = "/libraryCards")
-    public BaseResponse getLibraryCards(){
+    public BaseResponse getLibraryCard(){
         List<LibraryCard> libraryCard;
         try{
-            libraryCard= libraryCardService.getLibraryCards();
+            libraryCard= libraryCardService.getLibraryCard();
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
