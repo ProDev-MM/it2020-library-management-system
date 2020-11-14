@@ -8,13 +8,18 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.FileTypeMap;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.StringTokenizer;
 
 
@@ -72,4 +77,23 @@ public class FileController {
         }
         return new BaseResponse(GlobalConstant.success, response, GlobalConstant.Message.success_message);
     }
+
+    @GetMapping(path = {"/file/get/**"})
+    @CrossOrigin
+    public ResponseEntity<byte[]> getImage(HttpServletRequest request) throws IOException {
+        String fileName = request.getServletPath();
+        int index = fileName.indexOf("upload");
+        try {
+
+            fileName = fileName.substring(index);
+
+        }catch (StringIndexOutOfBoundsException e){
+            return null;
+        }
+        File image = new File(fileName);
+        return ResponseEntity.ok()
+                .contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(image)))
+                .body(Files.readAllBytes(image.toPath()));
+    }
+
 }
