@@ -115,15 +115,4 @@ public class StudentController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-//    @PostMapping("/create/student")
-//    public BaseResponse createStudent(@RequestBody Student student){
-//        try {
-//            student = studentService.addStudent(student);
-//        }catch(Exception e) {
-//            out.println("Error occur "+e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//        return new BaseResponse(GlobalConstant.success, student, GlobalConstant.Message.success_message);
-//    }
-
 }
