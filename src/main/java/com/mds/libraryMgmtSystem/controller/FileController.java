@@ -30,7 +30,7 @@ public class FileController {
     Logger logger= LoggerFactory.getLogger(FileController.class);
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @GetMapping("file/download")
     //upload/PROFILE/Htet Lwin Aun/55991602399446006/200x200bb.jpg"

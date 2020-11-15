@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class OQService {
     @Autowired
-    OQRepository oqRepository;
+    private OQRepository oqRepository;
 
 
     public List<OQ> getOQ() {

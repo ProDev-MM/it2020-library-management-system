@@ -1,13 +1,13 @@
 package com.mds.libraryMgmtSystem.pojo;
 
 public class BookPojo {
-    Long id;
-    String name;
-    String author;
-    String edition;
-    String isbn;
-    String imgUrl;
-    String price;
+    private Long id;
+    private String name;
+    private String author;
+    private String edition;
+    private String isbn;
+    private String imgUrl;
+    private String price;
 
 
     public BookPojo(Long id, String name, String author, String edition, String isbn, String imgUrl, String price) {

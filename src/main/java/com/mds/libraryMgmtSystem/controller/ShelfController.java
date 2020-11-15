@@ -16,7 +16,7 @@ import static java.lang.System.out;
 @CrossOrigin
 public class ShelfController {
     @Autowired
-    ShelfService shelfService;
+    private ShelfService shelfService;
 
     @GetMapping(value = "/shelfs")
     public BaseResponse getShelves(){

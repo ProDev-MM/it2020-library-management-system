@@ -20,10 +20,10 @@ import static java.lang.System.out;
 @CrossOrigin
 public class BookController {
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping(value = "/books")
     public BaseResponse getBook(){

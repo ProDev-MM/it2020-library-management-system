@@ -22,7 +22,7 @@ import static java.lang.System.setOut;
 @CrossOrigin
 public class StudentController {
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
 
     @GetMapping(value = "/students")
     public BaseResponse getStudent(){

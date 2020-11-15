@@ -6,23 +6,27 @@ import com.mds.libraryMgmtSystem.entity.Rent;
 import java.time.LocalDate;
 
 public class RentPojo {
-    Long id;
-    LocalDate rentFromDate;
-    LocalDate rentToDate;
-    @JsonIgnore LocalDate returnDate;
-    String fine;
+    private Long id;
+    private LocalDate rentFromDate;
+    private LocalDate rentToDate;
+    private LocalDate returnDate;
+    private String fine;
     private Rent.Status status;
 
-    Long studentId;
-    Long bookId;
-    Long librarianId;
+    private Long studentId;
+    private Long bookId;
+    private Long librarianId;
 
-    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, String fine) {
+    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, String fine, Rent.Status status, Long studentId, Long bookId, Long librarianId) {
         this.id = id;
         this.rentFromDate = rentFromDate;
         this.rentToDate = rentToDate;
         this.returnDate = returnDate;
         this.fine = fine;
+        this.status = status;
+        this.studentId = studentId;
+        this.bookId = bookId;
+        this.librarianId = librarianId;
     }
 
     public Long getId() {

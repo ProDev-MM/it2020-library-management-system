@@ -16,7 +16,7 @@ import static java.lang.System.out;
 @CrossOrigin
 public class LibraryCardController {
     @Autowired
-    LibraryCardService libraryCardService;
+    private LibraryCardService libraryCardService;
 
     @GetMapping(value = "/libraryCards")
     public BaseResponse getLibraryCard(){

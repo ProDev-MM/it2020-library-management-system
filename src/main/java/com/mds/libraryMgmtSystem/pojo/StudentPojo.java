@@ -3,14 +3,14 @@ package com.mds.libraryMgmtSystem.pojo;
 import java.time.LocalDate;
 
 public class StudentPojo {
-    Long id;
-    String name;
-    String email;
-    String address;
-    String phone;
-    String rollNo;
-    LocalDate dateOfBirth;
-    String password;
+    private Long id;
+    private String name;
+    private String email;
+    private String address;
+    private String phone;
+    private String rollNo;
+    private LocalDate dateOfBirth;
+    private String password;
 
     public Long getId() {
         return id;

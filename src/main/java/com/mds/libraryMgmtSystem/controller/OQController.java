@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin
 public class OQController {
     @Autowired
-    OQService oqService;
+    private OQService oqService;
 
     @GetMapping(value = "/oqs")
     public BaseResponse getOQ() {

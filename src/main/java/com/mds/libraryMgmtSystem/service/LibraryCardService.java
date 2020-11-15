@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class LibraryCardService {
     @Autowired
-    LibraryCardRepository libraryCardRepository;
+    private LibraryCardRepository libraryCardRepository;
 
     public List<LibraryCard> getLibraryCard() {
         return libraryCardRepository.findAll();

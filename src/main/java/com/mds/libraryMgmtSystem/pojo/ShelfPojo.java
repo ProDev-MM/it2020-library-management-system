@@ -1,8 +1,8 @@
 package com.mds.libraryMgmtSystem.pojo;
 
 public class ShelfPojo {
-    Long id;
-    String room;
+    private Long id;
+    private String room;
 
     public ShelfPojo(Long id, String room) {
         this.id = id;

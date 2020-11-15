@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class ShelfService {
     @Autowired
-    ShelfRepository shelfRepository;
+    private ShelfRepository shelfRepository;
 
     public List<Shelf> getShelves() {
         return shelfRepository.findAll();
