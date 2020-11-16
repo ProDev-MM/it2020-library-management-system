@@ -44,7 +44,6 @@ public class LibraryCardController {
 
     @PostMapping(value = "/libraryCard")
     public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
-//        LibraryCard lbCard;
         try {
             List<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCard.getRollNo());
             if (lbC == null || !lbC.isEmpty() ){
@@ -60,6 +59,8 @@ public class LibraryCardController {
 
     }
 
+
+
     @DeleteMapping(value="/libraryCard/{id}")
     public BaseResponse deleteLibraryCard(@PathVariable Long id){
         try {
@@ -71,7 +72,7 @@ public class LibraryCardController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-
+//resolve conflict
     @PutMapping (value = "/libraryCard")
     public BaseResponse updateLibraryCard(@RequestBody LibraryCardPojo libraryCardPojo) {
         LibraryCard libraryCards;
