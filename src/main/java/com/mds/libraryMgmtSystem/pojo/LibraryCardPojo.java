@@ -1,11 +1,11 @@
 package com.mds.libraryMgmtSystem.pojo;
 
 public class LibraryCardPojo {
-    Long id;
-    String name;
-    String rollNo;
-    String year;
-    String logoUrl;
+    private Long id;
+    private String name;
+    private String rollNo;
+    private String year;
+    private String logoUrl;
 
     public LibraryCardPojo(Long id, String name, String rollNo, String year, String logoUrl) {
         this.id = id;

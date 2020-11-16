@@ -1,20 +1,24 @@
 package com.mds.libraryMgmtSystem.pojo;
 
-public class LibrarianPojo {
-    Long id;
-    String name;
-    String email;
-    String address;
-    String phone;
-    String password;
+import com.mds.libraryMgmtSystem.entity.Librarian;
 
-    public LibrarianPojo(Long id, String name, String email, String address, String phone, String password) {
+public class LibrarianPojo {
+    private Long id;
+    private String name;
+    private String email;
+    private String address;
+    private String phone;
+    private String password;
+    private Librarian.Position position;
+
+    public LibrarianPojo(Long id, String name, String email, String address, String phone, String password, Librarian.Position position) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
         this.phone = phone;
         this.password = password;
+        this.position = position;
     }
 
     public Long getId() {
@@ -63,5 +67,13 @@ public class LibrarianPojo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Librarian.Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Librarian.Position position) {
+        this.position = position;
     }
 }

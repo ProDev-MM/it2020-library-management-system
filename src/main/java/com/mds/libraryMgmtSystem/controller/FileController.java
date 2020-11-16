@@ -30,7 +30,7 @@ public class FileController {
     Logger logger= LoggerFactory.getLogger(FileController.class);
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @GetMapping("file/download")
     public void downloadFile(@RequestParam String path, HttpServletResponse response) {

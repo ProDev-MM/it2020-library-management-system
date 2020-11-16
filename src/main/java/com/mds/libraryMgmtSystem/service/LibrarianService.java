@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class LibrarianService {
     @Autowired
-    LibrarianRepository librarianRepository;
+    private LibrarianRepository librarianRepository;
 
     public List<Librarian> getLibrarian() {
         return  librarianRepository.findAll();

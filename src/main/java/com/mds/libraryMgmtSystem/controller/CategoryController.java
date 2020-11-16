@@ -18,10 +18,10 @@ import static java.lang.System.out;
 @CrossOrigin
 public class CategoryController {
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     @GetMapping(value = "/categories")
     public BaseResponse getCategory(){

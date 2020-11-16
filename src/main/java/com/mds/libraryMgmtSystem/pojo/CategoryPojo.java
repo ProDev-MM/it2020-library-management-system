@@ -1,9 +1,9 @@
 package com.mds.libraryMgmtSystem.pojo;
 
 public class CategoryPojo {
-    Long id;
-    String type;
-    String description;
+    private Long id;
+    private String type;
+    private String description;
 
     public CategoryPojo(Long id, String type, String description) {
         this.id = id;

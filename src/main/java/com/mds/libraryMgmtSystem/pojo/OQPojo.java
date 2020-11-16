@@ -3,11 +3,11 @@ package com.mds.libraryMgmtSystem.pojo;
 import java.time.LocalDate;
 
 public class OQPojo {
-    Long id;
-    String subject;
-    String pdfUrl;
-    String year;
-    LocalDate postedDate;
+    private Long id;
+    private String subject;
+    private String pdfUrl;
+    private String year;
+    private LocalDate postedDate;
 
     @Override
     public String toString() {

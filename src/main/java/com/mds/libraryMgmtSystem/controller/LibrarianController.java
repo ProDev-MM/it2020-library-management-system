@@ -19,7 +19,7 @@ import static java.lang.System.out;
 public class LibrarianController {
 
     @Autowired
-    LibrarianService librarianService;
+    private LibrarianService librarianService;
 
     //New controller
     @GetMapping(value = "/librarians")
@@ -98,6 +98,7 @@ public class LibrarianController {
             librarian.setAddress(librarianPojo.getAddress());
             librarian.setPhone(librarianPojo.getPhone());
             librarian.setPassword(librarianPojo.getPassword());
+            librarian.setPosition(librarianPojo.getPosition());
             librarians = librarianService.save(librarian);
 
         }catch(Exception e) {
@@ -108,18 +109,5 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, librarians,GlobalConstant.Message.success_message);
 
     }
-
- //   @PostMapping(value = "/librarian")
-//    public BaseResponse createLibrarian(@RequestBody Librarian librarian){
-//        try {
-//            librarian = librarianService.addLibrarian(librarian);
-//        }catch(Exception e) {
-//            out.println("Error occur "+e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//        return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
-//
-//    }
-
 
 }

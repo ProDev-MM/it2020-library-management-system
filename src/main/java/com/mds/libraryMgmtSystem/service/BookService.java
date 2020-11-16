@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class BookService {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     public List<Book> getBook() {
         return bookRepository.findAll();

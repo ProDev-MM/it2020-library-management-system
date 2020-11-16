@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class StudentService {
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
 
     public List<Student> getStudent() {
         return studentRepository.findAll();

@@ -23,10 +23,10 @@ import static java.lang.System.out;
 @CrossOrigin
 public class BookController {
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
     BookRepository bookRepository;

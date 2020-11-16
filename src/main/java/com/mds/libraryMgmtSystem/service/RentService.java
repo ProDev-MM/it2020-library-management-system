@@ -19,14 +19,14 @@ import java.util.Optional;
 @Service
 public class RentService {
     @Autowired
-    RentRepository rentRepository;
+    private RentRepository rentRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
     @Autowired
-    LibrarianRepository librarianRepository;
+    private LibrarianRepository librarianRepository;
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     public List<Rent> getRent() {
         return rentRepository.findAll();
@@ -66,6 +66,7 @@ public class RentService {
     }
 
     public Rent updateRent(Rent rent) {
+
         return rentRepository.save(rent);
     }
 
