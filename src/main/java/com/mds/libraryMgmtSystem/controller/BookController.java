@@ -2,6 +2,7 @@ package com.mds.libraryMgmtSystem.controller;
 
 
 import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
@@ -9,6 +10,8 @@ import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.pojo.BookPojo;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +28,9 @@ public class BookController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    BookRepository bookRepository;
+
     @GetMapping(value = "/books")
     public BaseResponse getBook(){
         List<Book> book;
@@ -35,6 +41,12 @@ public class BookController {
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
+    }
+
+    @RequestMapping(value = "/listPageable", method = RequestMethod.GET)
+    Page<Book> bookPageable(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+
     }
 
     @GetMapping(value="/book/{id}")
@@ -72,6 +84,7 @@ public class BookController {
         }
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
+
 
     @PostMapping(value = "/book")
     public BaseResponse createBook(@RequestBody Book book){

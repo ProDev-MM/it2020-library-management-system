@@ -44,7 +44,13 @@ public class LibraryCardController {
 
     @PostMapping(value = "/libraryCard")
     public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
+//        LibraryCard lbCard;
         try {
+            List<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCard.getRollNo());
+            if (lbC == null || !lbC.isEmpty() ){
+                out.println("ALready RollNo Exists!");
+                return null;
+            }
             libraryCard = libraryCardService.addLibraryCard(libraryCard);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
@@ -71,9 +77,11 @@ public class LibraryCardController {
         LibraryCard libraryCards;
 
         try{
+            List<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
             LibraryCard libraryCard = libraryCardService.findById(libraryCardPojo.getId());
 
-            if(libraryCard==null) {
+            if(libraryCard==null || lbC== null || !lbC.isEmpty()) {
+                out.println("RollNo Already Exists");
                 return null;
             }
             libraryCard.setName(libraryCardPojo.getName());

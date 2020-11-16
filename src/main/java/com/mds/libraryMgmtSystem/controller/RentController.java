@@ -1,14 +1,22 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
+import com.mds.libraryMgmtSystem.entity.Book;
+import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.Rent;
+import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.RentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
+import com.mds.libraryMgmtSystem.service.BookService;
+import com.mds.libraryMgmtSystem.service.LibrarianService;
 import com.mds.libraryMgmtSystem.service.RentService;
+import com.mds.libraryMgmtSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -17,6 +25,15 @@ import static java.lang.System.out;
 public class RentController {
     @Autowired
     RentService rentService;
+
+    @Autowired
+    BookService bookService;
+
+    @Autowired
+    StudentService studentService;
+
+    @Autowired
+    LibrarianService librarianService;
 
     @GetMapping(value = "/rents")
     public BaseResponse getRent(){
@@ -74,7 +91,9 @@ public class RentController {
 
        Rent rents;
 
+
         try{
+
             Rent rent = rentService.findById(rentPojo.getId());
 
             if(rent == null){
