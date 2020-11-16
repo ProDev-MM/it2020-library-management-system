@@ -31,4 +31,8 @@ public class LibraryCardService {
     public LibraryCard updateLibraryCard(LibraryCard libraryCard) {
         return libraryCardRepository.save(libraryCard);
     }
+
+    public List<LibraryCard> findByRollNo(String rollNo) {
+        return libraryCardRepository.findByRollNo(rollNo);
+    }
 }

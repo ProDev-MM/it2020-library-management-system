@@ -33,7 +33,6 @@ public class FileController {
     private FileService fileService;
 
     @GetMapping("file/download")
-    //upload/PROFILE/Htet Lwin Aun/55991602399446006/200x200bb.jpg"
     public void downloadFile(@RequestParam String path, HttpServletResponse response) {
         logger.info("Info to download file path {} ",path);
 
@@ -79,7 +78,6 @@ public class FileController {
     }
 
     @GetMapping(path = {"/file/get/**"})
-    @CrossOrigin
     public ResponseEntity<byte[]> getImage(HttpServletRequest request) throws IOException {
         String fileName = request.getServletPath();
         int index = fileName.indexOf("upload");
