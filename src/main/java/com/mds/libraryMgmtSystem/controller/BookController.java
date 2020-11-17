@@ -1,7 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
 
-import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -28,14 +26,13 @@ public class BookController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    BookRepository bookRepository;
-
     @GetMapping(value = "/books")
-    public BaseResponse getBook(){
+    public BaseResponse getBook( @RequestParam(defaultValue = "0") Integer pageNo,
+                                 @RequestParam(defaultValue = "10") Integer pageSize,
+                                 @RequestParam(defaultValue = "id") String sortBy){
         List<Book> book;
         try{
-            book= bookService.getBook();
+            book= bookService.getBook(pageNo, pageSize, sortBy);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -43,11 +40,6 @@ public class BookController {
         return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
 
-    @RequestMapping(value = "/listPageable", method = RequestMethod.GET)
-    Page<Book> bookPageable(Pageable pageable) {
-        return bookRepository.findAll(pageable);
-
-    }
 
     @GetMapping(value="/book/{id}")
     public BaseResponse getById(@PathVariable Long id){

@@ -3,18 +3,30 @@ package com.mds.libraryMgmtSystem.service;
 import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> getBook() {
-        return bookRepository.findAll();
+    public List<Book> getBook(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        Page<Book> pagedResult = bookRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Book>();
+        }
     }
 
     public Book findById(Long id) {
