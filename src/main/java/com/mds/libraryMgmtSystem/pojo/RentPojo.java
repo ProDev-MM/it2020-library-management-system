@@ -10,14 +10,14 @@ public class RentPojo {
     private LocalDate rentFromDate;
     private LocalDate rentToDate;
     private LocalDate returnDate;
-    private String fine;
+    private Integer fine;
     private Rent.Status status;
 
     private Long studentId;
     private Long bookId;
     private Long librarianId;
 
-    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, String fine, Rent.Status status, Long studentId, Long bookId, Long librarianId) {
+    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, Integer fine, Rent.Status status, Long studentId, Long bookId, Long librarianId) {
         this.id = id;
         this.rentFromDate = rentFromDate;
         this.rentToDate = rentToDate;
@@ -61,11 +61,11 @@ public class RentPojo {
         this.returnDate = returnDate;
     }
 
-    public String getFine() {
+    public Integer getFine() {
         return fine;
     }
 
-    public void setFine(String fine) {
+    public void setFine(Integer fine) {
         this.fine = fine;
     }
 

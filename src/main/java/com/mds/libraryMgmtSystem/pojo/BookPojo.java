@@ -7,10 +7,10 @@ public class BookPojo {
     private String edition;
     private String isbn;
     private String imgUrl;
-    private String price;
+    private Integer price;
 
 
-    public BookPojo(Long id, String name, String author, String edition, String isbn, String imgUrl, String price) {
+    public BookPojo(Long id, String name, String author, String edition, String isbn, String imgUrl, Integer price) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -68,11 +68,11 @@ public class BookPojo {
         this.imgUrl = imgUrl;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

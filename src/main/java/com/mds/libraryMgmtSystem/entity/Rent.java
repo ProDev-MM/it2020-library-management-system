@@ -21,7 +21,7 @@ public class Rent {
     private LocalDate returnDate;
 
     @Column
-    private String fine;
+    private Integer fine;
 
     @Enumerated(EnumType.ORDINAL)
     private Status status;
@@ -74,11 +74,11 @@ public class Rent {
         this.returnDate = returnDate;
     }
 
-    public String getFine() {
+    public Integer getFine() {
         return fine;
     }
 
-    public void setFine(String fine) {
+    public void setFine(Integer fine) {
         this.fine = fine;
     }
 

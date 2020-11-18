@@ -1,7 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
 
-import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
@@ -9,12 +8,9 @@ import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.pojo.BookPojo;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import static java.lang.System.out;
 
 @RestController
