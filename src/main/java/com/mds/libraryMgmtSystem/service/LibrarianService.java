@@ -5,7 +5,9 @@ import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibrarianService {
@@ -21,6 +23,10 @@ public class LibrarianService {
     }
 
     public Librarian addLibrarian(Librarian librarian) {
+        Optional<Librarian> optionalLibrarian = librarianRepository.findByEmail(librarian.getEmail());
+        if(optionalLibrarian.isPresent()){
+            throw new EntityExistsException(" User with " + librarian.getEmail() + " already exist!");
+        }
         return librarianRepository.save(librarian);
     }
 
@@ -32,7 +38,7 @@ public class LibrarianService {
         return librarianRepository.save(librarian);
     }
 
-    public List<Librarian> findByEmail(String email) {
+    public Optional<Librarian> findByEmail(String email) {
         return librarianRepository.findByEmail(email);
     }
 }

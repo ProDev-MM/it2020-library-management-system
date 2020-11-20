@@ -61,7 +61,6 @@ public class RentService {
         rent.setStudent(student.get());
         rent.setBook(book.get());
         rent.setLibrarian(librarian.get());
-
         return rentRepository.save(rent);
     }
 

@@ -8,9 +8,11 @@ import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibrarianService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -20,6 +22,10 @@ public class LibrarianController {
 
     @Autowired
     private LibrarianService librarianService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     //New controller
     @GetMapping(value = "/librarians")
@@ -51,13 +57,14 @@ public class LibrarianController {
         Librarian librarians;
 
         try{
-            List<Librarian> lib = librarianService.findByEmail(librarian.getEmail());
+            Optional<Librarian> lib = librarianService.findByEmail(librarian.getEmail());
 //            List<Student> stud = bookService.findByRollNo(student.getRollNo());
-            if(lib== null || !lib.isEmpty()) {
+            if(lib== null || lib.isPresent()) {
                 out.println("Already Email Exist");
                 return null;
             }
-
+            String encriptedPassword = passwordEncoder.encode(librarian.getPassword());
+            librarian.setPassword(encriptedPassword);
             librarians = librarianService.addLibrarian(librarian);
 
         }catch(Exception e) {
@@ -87,9 +94,10 @@ public class LibrarianController {
 
         try{
             Librarian librarian = librarianService.findById(librarianPojo.getId());
-            List<Librarian> lib = librarianService.findByEmail(librarianPojo.getEmail());
+//            List<Librarian> lib = librarianService.findByEmail(librarianPojo.getEmail());
 
-            if(librarian==null || lib== null || !lib.isEmpty()) {
+            if(librarian==null ) {
+//                || lib== null || !lib.isEmpty()
                 out.println("Email Already Exists");
                 return null;
             }
