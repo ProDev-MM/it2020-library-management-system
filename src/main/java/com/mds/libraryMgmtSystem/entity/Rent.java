@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="rent")
+@Table(name="Rent")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
 public class Rent {
     @Id

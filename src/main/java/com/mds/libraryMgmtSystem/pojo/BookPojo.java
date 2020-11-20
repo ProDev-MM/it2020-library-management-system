@@ -1,5 +1,8 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import com.mds.libraryMgmtSystem.entity.Category;
+import com.mds.libraryMgmtSystem.entity.Shelf;
+
 public class BookPojo {
     private Long id;
     private String name;
@@ -7,10 +10,12 @@ public class BookPojo {
     private String edition;
     private String isbn;
     private String imgUrl;
-    private Integer price;
+    private String price;
 
+    private Category categories;
+    private Shelf shelves;
 
-    public BookPojo(Long id, String name, String author, String edition, String isbn, String imgUrl, Integer price) {
+    public BookPojo(Long id, String name, String author, String edition, String isbn, String imgUrl, String price, Category categories, Shelf shelves) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -18,6 +23,8 @@ public class BookPojo {
         this.isbn = isbn;
         this.imgUrl = imgUrl;
         this.price = price;
+        this.categories = categories;
+        this.shelves = shelves;
     }
 
     public Long getId() {
@@ -68,11 +75,27 @@ public class BookPojo {
         this.imgUrl = imgUrl;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
+    }
+
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
+    }
+
+    public Shelf getShelves() {
+        return shelves;
+    }
+
+    public void setShelves(Shelf shelves) {
+        this.shelves = shelves;
     }
 }

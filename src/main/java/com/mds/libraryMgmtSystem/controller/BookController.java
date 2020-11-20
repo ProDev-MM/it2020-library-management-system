@@ -114,6 +114,8 @@ public class BookController {
             book.setImgUrl(bookPojo.getImgUrl());
             book.setIsbn(bookPojo.getIsbn());
             book.setPrice(bookPojo.getPrice());
+            book.setCategories(bookPojo.getCategories());
+            book.setShelves(bookPojo.getShelves());
             books = bookService.save(book);
 
         }catch(Exception e) {
