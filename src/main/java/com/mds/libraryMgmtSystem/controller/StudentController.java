@@ -1,6 +1,8 @@
 package com.mds.libraryMgmtSystem.controller;
 
+import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import com.mds.libraryMgmtSystem.service.StudentService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
@@ -12,17 +14,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 @RestController
 @CrossOrigin
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private LibraryCardService libraryCardService;
+
 
     @GetMapping(value = "/students")
     public BaseResponse getStudent(){
@@ -78,15 +84,18 @@ public class StudentController {
         Student students;
 
         try{
+            Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
+            if(!libraryCard.isPresent()){
+                throw new EntityNotFoundException("LibraryCard ID not found");
+            }
             Student student = studentService.findById(studentPojo.getId());
-            List<Student> stu = studentService.findByEmail(studentPojo.getEmail());
-            List<Student> stud = studentService.findByRollNo(studentPojo.getRollNo());
 
-        if(student==null || stu== null || !stu.isEmpty() || stud== null || !stud.isEmpty()) {
-            out.println("Already Email Exist");
-            out.println("Roll Email Exists");
-            return null;
-        }
+//            List<Student> stu = studentService.findByEmail(studentPojo.getEmail());
+//            List<Student> stud = studentService.findByRollNo(studentPojo.getRollNo());
+
+            if(student==null) {
+                return null;
+            }
         student.setName(studentPojo.getName());
         student.setEmail(studentPojo.getEmail());
         student.setAddress(studentPojo.getAddress());
@@ -94,11 +103,12 @@ public class StudentController {
         student.setRollNo(studentPojo.getRollNo());
         student.setDateOfBirth(studentPojo.getDateOfBirth());
         student.setPassword(studentPojo.getPassword());
+        student.setLibraryCard(libraryCard.get());
         students = studentService.save(student);
 
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+            return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
         }
 
         return new BaseResponse(GlobalConstant.success, students,GlobalConstant.Message.success_message);
