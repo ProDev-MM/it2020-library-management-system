@@ -8,14 +8,9 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +54,6 @@ public class StudentController {
     @PostMapping("/create/student")
     public BaseResponse createStudent(@RequestBody Student student){
         Student students;
-
         try{
             List<Student> stu = studentService.findByEmail(student.getEmail());
             List<Student> stud = studentService.findByRollNo(student.getRollNo());
@@ -68,16 +62,15 @@ public class StudentController {
                 out.println("Roll Email Exists");
                 return null;
             }
-
             students = studentService.addStudent(student);
 
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
-
         return new BaseResponse(GlobalConstant.success, students,GlobalConstant.Message.success_message);
     }
+
     @PutMapping (value = "/student")
     public BaseResponse updateStudent(@RequestBody StudentPojo studentPojo) {
 
@@ -114,6 +107,7 @@ public class StudentController {
         return new BaseResponse(GlobalConstant.success, students,GlobalConstant.Message.success_message);
 
     }
+
     @DeleteMapping(value="/student/{id}")
     public BaseResponse deleteStudent(@PathVariable Long id){
         try {
