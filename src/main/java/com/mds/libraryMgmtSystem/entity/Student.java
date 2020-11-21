@@ -37,6 +37,10 @@ public class Student {
     @JoinColumn(name = "libraryCard_id")
     private LibraryCard libraryCard;
 
+    public boolean isDisabled() {
+        return true;
+    }
+
     public Long getId() {
         return id;
     }
