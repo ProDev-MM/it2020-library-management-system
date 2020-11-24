@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "librarian")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
-public class Librarian {
+public class Librarian implements User{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY,generator="seq")

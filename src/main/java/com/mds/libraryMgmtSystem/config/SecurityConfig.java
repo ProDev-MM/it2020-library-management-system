@@ -31,8 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .cors()
                 .and().authorizeRequests()
-                .antMatchers("/master").hasAuthority("ADMIN")
-                .antMatchers("/staff").hasAnyAuthority("USER", "ADMIN")
-                .anyRequest().permitAll();
+                .antMatchers("/master").hasAuthority("ADMIN");
+//                .antMatchers("/staff").hasAnyAuthority("USER");
+//                .anyRequest().permitAll();
     }
+
+
+
 }

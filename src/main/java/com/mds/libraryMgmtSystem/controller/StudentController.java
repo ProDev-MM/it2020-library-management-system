@@ -8,6 +8,7 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,6 +24,8 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private LibraryCardService libraryCardService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @GetMapping(value = "/students")
@@ -55,13 +58,15 @@ public class StudentController {
     public BaseResponse createStudent(@RequestBody Student student){
         Student students;
         try{
-            List<Student> stu = studentService.findByEmail(student.getEmail());
+            Optional<Student> stu = studentService.findByEmail(student.getEmail());
             List<Student> stud = studentService.findByRollNo(student.getRollNo());
-            if(stu== null || !stu.isEmpty() || stud== null || !stud.isEmpty()) {
+            if(stu== null || stu.isPresent() || stud== null || !stud.isEmpty()) {
                 out.println("Already Email Exist");
                 out.println("Roll Email Exists");
                 return null;
             }
+            String encriptedPassword = passwordEncoder.encode(student.getPassword());
+            student.setPassword(encriptedPassword);
             students = studentService.addStudent(student);
 
         }catch(Exception e) {
@@ -71,33 +76,38 @@ public class StudentController {
         return new BaseResponse(GlobalConstant.success, students,GlobalConstant.Message.success_message);
     }
 
+
     @PutMapping (value = "/student")
     public BaseResponse updateStudent(@RequestBody StudentPojo studentPojo) {
 
         Student students;
 
         try{
+            Student student = studentService.findById(studentPojo.getId());
             Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
             if(!libraryCard.isPresent()){
                 throw new EntityNotFoundException("LibraryCard ID not found");
             }
-            Student student = studentService.findById(studentPojo.getId());
 
-//            List<Student> stu = studentService.findByEmail(studentPojo.getEmail());
-//            List<Student> stud = studentService.findByRollNo(studentPojo.getRollNo());
+            Student studentId = studentService.findById(student.getId());
+            Optional<Student> email = studentService.findByEmail(studentPojo.getEmail());
 
-            if(student==null) {
+//            List<Student> rollNo = studentService.findByRollNo(studentPojo.getRollNo());
+
+            if(student==null || (email.isPresent())  && (student != studentId) ) {
+
                 return null;
             }
-        student.setName(studentPojo.getName());
-        student.setEmail(studentPojo.getEmail());
-        student.setAddress(studentPojo.getAddress());
-        student.setPhone(studentPojo.getPhone());
-        student.setRollNo(studentPojo.getRollNo());
-        student.setDateOfBirth(studentPojo.getDateOfBirth());
-        student.setPassword(studentPojo.getPassword());
-        student.setLibraryCard(libraryCard.get());
-        students = studentService.save(student);
+                student.setName(studentPojo.getName());
+                student.setEmail(studentPojo.getEmail());
+                student.setAddress(studentPojo.getAddress());
+                student.setPhone(studentPojo.getPhone());
+                student.setRollNo(studentPojo.getRollNo());
+                student.setDateOfBirth(studentPojo.getDateOfBirth());
+                student.setPassword(studentPojo.getPassword());
+                student.setLibraryCard(libraryCard.get());
+                students = studentService.save(student);
+
 
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());

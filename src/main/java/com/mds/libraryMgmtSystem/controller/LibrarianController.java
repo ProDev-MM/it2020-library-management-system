@@ -94,10 +94,10 @@ public class LibrarianController {
 
         try{
             Librarian librarian = librarianService.findById(librarianPojo.getId());
-//            List<Librarian> lib = librarianService.findByEmail(librarianPojo.getEmail());
+            Librarian librarianId = librarianService.findById(librarian.getId());
+            Optional<Librarian> email = librarianService.findByEmail(librarianPojo.getEmail());
 
-            if(librarian==null ) {
-//                || lib== null || !lib.isEmpty()
+            if(librarian==null || (email.isPresent())  && (librarian != librarianId)) {
                 out.println("Email Already Exists");
                 return null;
             }

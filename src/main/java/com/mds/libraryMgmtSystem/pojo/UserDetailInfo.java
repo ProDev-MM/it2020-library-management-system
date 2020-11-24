@@ -1,5 +1,10 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import com.mds.libraryMgmtSystem.entity.Credential;
+import com.mds.libraryMgmtSystem.entity.Librarian;
+import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.entity.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,31 +15,36 @@ import java.util.List;
 
 public class UserDetailInfo implements UserDetails {
 
-    private String username;
+    @Getter
+    private Librarian librarian;
 
-    private String password;
-
-    private List<SimpleGrantedAuthority> authorityList;
-
-    public UserDetailInfo(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.authorityList = Arrays.asList(new SimpleGrantedAuthority(role));
+    public UserDetailInfo(Librarian librarian) {
+        this.librarian = librarian;
     }
+
+
+//    private List<SimpleGrantedAuthority> authorityList;
+
+//    public UserDetailInfo(String username, String password, String role) {
+//        this.username = username;
+//        this.password = password;
+//        this.authorityList = Arrays.asList(new SimpleGrantedAuthority(role));
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorityList;
+        return Arrays.asList(new SimpleGrantedAuthority(this.librarian.getRole()));
     }
+
 
     @Override
     public String getPassword() {
-        return this.password;
+        return this.librarian.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.librarian.getEmail();
     }
 
     @Override

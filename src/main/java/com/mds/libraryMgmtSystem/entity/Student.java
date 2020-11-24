@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "student")
 @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
-public class Student {
+public class Student implements User{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY,generator="seq")
     private Long id;
@@ -32,6 +32,9 @@ public class Student {
 
     @Column
     private String password;
+
+    @Column
+    private String role;
 
     @OneToOne
     @JoinColumn(name = "libraryCard_id")
@@ -103,6 +106,14 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public LibraryCard getLibraryCard() {
