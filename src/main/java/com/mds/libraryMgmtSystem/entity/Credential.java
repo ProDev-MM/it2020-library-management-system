@@ -1,10 +1,17 @@
 package com.mds.libraryMgmtSystem.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Credential{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String email;
     private String password;
     private String role;
+    @OneToOne
     private User user;
 
     public long getId() {

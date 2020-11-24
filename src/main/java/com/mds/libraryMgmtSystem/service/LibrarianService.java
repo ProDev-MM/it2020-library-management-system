@@ -1,6 +1,9 @@
 package com.mds.libraryMgmtSystem.service;
 
+import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
+import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
+import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class LibrarianService {
     @Autowired
     private LibrarianRepository librarianRepository;
 
+    @Autowired
+    private CredentialRepository credentialRepository;
+
     public List<Librarian> getLibrarian() {
         return  librarianRepository.findAll();
     }
@@ -22,12 +28,27 @@ public class LibrarianService {
         return librarianRepository.findById(id).orElse(null);
     }
 
-    public Librarian addLibrarian(Librarian librarian) {
-        Optional<Librarian> optionalLibrarian = librarianRepository.findByEmail(librarian.getEmail());
-        if(optionalLibrarian.isPresent()){
-            throw new EntityExistsException(" User with " + librarian.getEmail() + " already exist!");
-        }
-        return librarianRepository.save(librarian);
+    public Librarian addLibrarian(LibrarianPojo librarianPojo) {
+//        Optional<Librarian> optionalLibrarian = librarianRepository.findByEmail(librarian.getEmail());
+//        if(optionalLibrarian.isPresent()){
+//            throw new EntityExistsException(" User with " + librarian.getEmail() + " already exist!");
+//        }
+
+        // sample
+        Librarian librarian = new Librarian();
+        librarian.setName(librarianPojo.getName()); // .......
+        librarian.setAddress(librarianPojo.getAddress());
+        librarian.setPhone(librarianPojo.getPhone());
+        librarian.setPosition(librarianPojo.getPosition());
+        librarianRepository.save(librarian);
+        Credential credential = new Credential();
+        credential.setEmail(librarianPojo.getEmail());// ........
+        credential.setPassword(librarianPojo.getPassword());
+        credential.setRole(librarianPojo.getRole());
+        credential.setUser(librarian);
+        credentialRepository.save(credential);
+        // sample
+        return librarian;
     }
 
     public void deleteLibrarian(Long id) {
@@ -37,8 +58,8 @@ public class LibrarianService {
     public Librarian save(Librarian librarian) {
         return librarianRepository.save(librarian);
     }
-
-    public Optional<Librarian> findByEmail(String email) {
-        return librarianRepository.findByEmail(email);
-    }
+//
+//    public Optional<Credential> findByEmail(String email) {
+//        return credentialRepository.findByEmail(email);
+//    }
 }

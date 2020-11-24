@@ -9,17 +9,14 @@ public class LibrarianPojo {
     private String address;
     private String phone;
     private String password;
+    private String role;
     private Librarian.Position position;
 
-    public LibrarianPojo(Long id, String name, String email, String address, String phone, String password, Librarian.Position position) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.password = password;
-        this.position = position;
+    public LibrarianPojo() {
+
     }
+
+
 
     public Long getId() {
         return id;
@@ -35,14 +32,6 @@ public class LibrarianPojo {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getAddress() {
@@ -61,12 +50,28 @@ public class LibrarianPojo {
         this.phone = phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Librarian.Position getPosition() {

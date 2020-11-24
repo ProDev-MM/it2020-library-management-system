@@ -1,8 +1,10 @@
 package com.mds.libraryMgmtSystem.service;
 
+import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
+import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,22 +19,21 @@ import java.util.Optional;
 @Qualifier("MyUserDetails")
 public class CustormUserDetailsService implements UserDetailsService {
 
-    private LibrarianRepository librarianRepository;
+    private CredentialRepository credentialRepository;
 //    private StudentRepository studentRepository;
 
-    public CustormUserDetailsService(LibrarianRepository librarianRepository) {
-        this.librarianRepository = librarianRepository;
+    public CustormUserDetailsService(CredentialRepository credentialRepository) {
+        this.credentialRepository = credentialRepository;
 //        this.studentRepository = studentRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserDetailInfo userDetailInfo = null;
-        Optional<Librarian> optionalLibrarian = librarianRepository.findByEmail(email);
-//        Optional<Student> optionalStudent = studentRepository.findByEmail(email);
-        if(optionalLibrarian.isPresent()){
-            Librarian librarian = optionalLibrarian.get();
-            userDetailInfo = new UserDetailInfo(librarian);
+        Optional<Credential> optionalCredential = credentialRepository.findByEmail(email);
+        if(optionalCredential.isPresent()){
+            Credential credential = optionalCredential.get();
+            userDetailInfo = new UserDetailInfo(credential);
         }
         return userDetailInfo;
     }

@@ -5,24 +5,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 @Entity
-@Table(name = "student")
-@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
-public class Student implements User{
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY,generator="seq")
-    private Long id;
-
-    @Column
-    private String name;
-
-    @Column(unique = true)
-    private String email;
-
-    @Column
-    private String address;
-
-    @Column
-    private String phone;
+public class Student extends User{
+//
 
     @Column
     private String rollNo;
@@ -30,59 +14,15 @@ public class Student implements User{
     @Column
     private LocalDate dateOfBirth;
 
-    @Column
-    private String password;
-
-    @Column
-    private String role;
+//    @Column
+//    private String password;
+//
+//    @Column
+//    private String role;
 
     @OneToOne
     @JoinColumn(name = "libraryCard_id")
     private LibraryCard libraryCard;
-
-    public boolean isDisabled() {
-        return true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getRollNo() {
         return rollNo;
@@ -100,21 +40,6 @@ public class Student implements User{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public LibraryCard getLibraryCard() {
         return libraryCard;

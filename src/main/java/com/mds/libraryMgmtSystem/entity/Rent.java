@@ -31,7 +31,7 @@ public class Rent {
     }
 
     @OneToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn
     private Student student;
 
     @OneToOne
@@ -39,7 +39,7 @@ public class Rent {
     private Book book;
 
     @OneToOne
-    @JoinColumn(name = "librarian_id")
+    @JoinColumn
     private Librarian librarian;
 
     public Long getId() {

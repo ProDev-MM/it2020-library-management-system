@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface LibrarianRepository extends JpaRepository<Librarian, Long> {
 //    @Query("select l from Librarian l where l.email = ?1")
-//    List<Librarian> findByEmail(String email);
-    Optional<Librarian> findByEmail(String email);
+//    Optional<Librarian> findByEmail(String email);
 }

@@ -16,35 +16,25 @@ import java.util.List;
 public class UserDetailInfo implements UserDetails {
 
     @Getter
-    private Librarian librarian;
+    private Credential credential;
 
-    public UserDetailInfo(Librarian librarian) {
-        this.librarian = librarian;
+    public UserDetailInfo(Credential credential) {
+        this.credential = credential;
     }
-
-
-//    private List<SimpleGrantedAuthority> authorityList;
-
-//    public UserDetailInfo(String username, String password, String role) {
-//        this.username = username;
-//        this.password = password;
-//        this.authorityList = Arrays.asList(new SimpleGrantedAuthority(role));
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(this.librarian.getRole()));
+        return Arrays.asList(new SimpleGrantedAuthority(this.credential.getRole()));
     }
-
 
     @Override
     public String getPassword() {
-        return this.librarian.getPassword();
+        return this.credential.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.librarian.getEmail();
+        return this.credential.getEmail();
     }
 
     @Override
