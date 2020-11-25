@@ -14,7 +14,21 @@ public class StudentPojo {
     private LocalDate dateOfBirth;
     private String password;
     private String role;
-    private Long libraryCardId;
+    private String libraryCardRollNo;
+
+    public StudentPojo(Long id, String name, String email, String address, String phone, String rollNo, LocalDate dateOfBirth,
+                       String password, String role, String libraryCardRollNo) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.rollNo = rollNo;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.role = role;
+        this.libraryCardRollNo = libraryCardRollNo;
+    }
 
     public Long getId() {
         return id;
@@ -88,12 +102,12 @@ public class StudentPojo {
         this.role = role;
     }
 
-    public Long getLibraryCardId() {
-        return libraryCardId;
+    public String getLibraryCardRollNo() {
+        return libraryCardRollNo;
     }
 
-    public void setLibraryCardId(Long libraryCardId) {
-        this.libraryCardId = libraryCardId;
+    public void setLibraryCardRollNo(String libraryCardRollNo) {
+        this.libraryCardRollNo = libraryCardRollNo;
     }
 }
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibraryCardService {
@@ -32,7 +33,7 @@ public class LibraryCardService {
         return libraryCardRepository.save(libraryCard);
     }
 
-    public List<LibraryCard> findByRollNo(String rollNo) {
+    public Optional<LibraryCard> findByRollNo(String rollNo) {
         return libraryCardRepository.findByRollNo(rollNo);
     }
 }

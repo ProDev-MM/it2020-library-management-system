@@ -23,11 +23,10 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     @Autowired
-    private LibraryCardService libraryCardService;
-
-    @Autowired
     private CredentialRepository credentialRepository;
 
+    @Autowired
+    private LibraryCardService libraryCardService;
 
     public List<Student> getStudent() {
         return studentRepository.findAll();
@@ -38,24 +37,28 @@ public class StudentService {
     }
 
     public Student addStudent(StudentPojo studentPojo) {
-        Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
-        if(!libraryCard.isPresent()){
-            throw new EntityNotFoundException("LibraryCardId Not Found");
+        Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+//       Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
+        if(!optionalLibraryCard.isPresent()){
+            throw new EntityNotFoundException("LibraryCard's RollNo Not Found");
         }
+        // sample
         Student student = new Student();
-        student.setName(studentPojo.getName());
+        student.setName(studentPojo.getName()); // .......
         student.setAddress(studentPojo.getAddress());
         student.setPhone(studentPojo.getPhone());
         student.setDateOfBirth(studentPojo.getDateOfBirth());
         student.setRollNo(studentPojo.getRollNo());
-        student.setLibraryCard(libraryCard.get());
+        student.setLibraryCard(optionalLibraryCard.get());
+//        student.setPosition(studentPojo.getPosition());
         studentRepository.save(student);
         Credential credential = new Credential();
-        credential.setEmail(studentPojo.getEmail());
+        credential.setEmail(studentPojo.getEmail());// ........
         credential.setPassword(studentPojo.getPassword());
         credential.setRole(studentPojo.getRole());
         credential.setUser(student);
         credentialRepository.save(credential);
+        // sample
         return student;
     }
 
@@ -64,10 +67,16 @@ public class StudentService {
     }
 
     public Student save(Student student) {
+
         return studentRepository.save(student);
     }
 
     public Optional<Student> findByRollNo(String rollNo) {
         return studentRepository.findByRollNo(rollNo);
     }
+
+//    public Optional<Credential> findByEmail(String email) {
+//        return credentialRepository.findByEmail(email);
+//    }
+
 }

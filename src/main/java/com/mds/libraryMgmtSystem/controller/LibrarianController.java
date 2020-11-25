@@ -7,6 +7,7 @@ import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.CredentialPojo;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
+import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.CredentialService;
@@ -51,13 +52,13 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Student> login(Authentication authentication){
-//        UserDetailInfo userDetailInfo = (UserDetailInfo) authentication.getPrincipal();
-//        Student student = userDetailInfo.getStudent();
-//        student.setPassword(null);
-//        return ResponseEntity.ok(student);
-//    }
+    @PostMapping("/librarian/login")
+    public ResponseEntity<Credential> login(Authentication authentication){
+        UserDetailInfo userDetailInfo = (UserDetailInfo) authentication.getPrincipal();
+        Credential credential = userDetailInfo.getCredential();
+        credential.setPassword(null);
+        return ResponseEntity.ok(credential);
+    }
 
     @GetMapping(value = "/librarian/{id}")
     public BaseResponse getById(@PathVariable Long id) {
@@ -73,19 +74,17 @@ public class LibrarianController {
 
     @PostMapping("/create/Librarian")
     public BaseResponse createLibrarian(@RequestBody LibrarianPojo librarianPojo) {
-        Librarian librarians;
+        Librarian librarians = null;
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-            if(email== null || email.isPresent()) {
-                out.println("Already Email Exist");
-                return null;
+            if(!email.isPresent()) {
+                String encriptedPassword = passwordEncoder.encode(librarianPojo.getPassword());
+                librarianPojo.setPassword(encriptedPassword);
+                librarians = librarianService.addLibrarian(librarianPojo);
+            }else {
+                out.println("Exists");
             }
-
-            String encriptedPassword = passwordEncoder.encode(librarianPojo.getPassword());
-            librarianPojo.setPassword(encriptedPassword);
-            librarians = librarianService.addLibrarian(librarianPojo);
-
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -106,64 +105,36 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-//    @PutMapping(value = "/update/librarian")
-//    public BaseResponse updateLibrarian(@RequestBody CredentialPojo credentialPojo) {
-//        Credential credentials;
-//        try {
-//            Credential credential = credentialService.findById(credentialPojo.getId());
-//
-//            if(credential == null){
-//                return  null;
-//            }
-//            credential.setEmail(credentialPojo.getEmail());
-//            credential.setPassword(credentialPojo.getPassword());
-//            credential.setRole(credentialPojo.getRole());
-//            credential.setUser(credentialPojo.getUser());
-//
-//           credentials = credentialService.save(credential);
-//
-//        } catch (Exception e) {
-//            out.println("Error occur " + e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//
-//        return new BaseResponse(GlobalConstant.success,credentials , GlobalConstant.Message.success_message);
-//    }
 
-//    @PutMapping(value = "/update/librarian")
-//    public BaseResponse updateLibrarian(@RequestBody LibrarianPojo librarianPojo) {
-//        Librarian librarians;
-//        try {
-//            Librarian librarian = librarianService.findById(librarianPojo.getId());
-//
-////            Librarian librarianId = librarianService.findById(librarian.getId());
-////            Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-////
-////            if (librarian == null || (email.isPresent()) && (librarian != librarianId)) {
-////                out.println("Email Already Exists");
-////                return null;
-////            }
-//            if(librarian == null){
-//                return  null;
-//            }
-//            librarian.setName(librarianPojo.getName());
-//            librarian.setAddress(librarianPojo.getAddress());
-//            librarian.setPhone(librarianPojo.getPhone());
-//            librarian.setPosition(librarianPojo.getPosition());
-//            librarians = librarianService.save(librarian);
-//            Credential credential = new Credential();
-//            credential.setEmail(librarianPojo.getEmail());
-//            credential.setPassword(librarianPojo.getPassword());
-//            credential.setRole(librarianPojo.getRole());
-//            credential.setUser(librarian);
-//            credentialService.save(credential);
-//
-//        } catch (Exception e) {
-//            out.println("Error occur " + e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//
-//        return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
-//    }
+    @PutMapping(value = "/update/librarian")
+    public BaseResponse updateLibrarian(@RequestBody LibrarianPojo librarianPojo) {
+        Librarian librarians = null;
+        try {
+            Librarian librarian = librarianService.findById(librarianPojo.getId());
+            Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
+
+            if (!email.isPresent()){
+                librarian.setName(librarianPojo.getName());
+                librarian.setAddress(librarianPojo.getAddress());
+                librarian.setPhone(librarianPojo.getPhone());
+                librarian.setPosition(librarianPojo.getPosition());
+                librarians = librarianService.save(librarian);
+                Credential credential = new Credential();
+                credential.setEmail(librarianPojo.getEmail());
+                String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
+                librarianPojo.setPassword(encryptPassword);
+//                credential.setRole(librarianPojo.getRole());
+                credential.setUser(librarian);
+                credentialService.save(credential);
+            }
+
+
+        } catch (Exception e) {
+            out.println("Error occur " + e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+
+        return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
+    }
 
 }

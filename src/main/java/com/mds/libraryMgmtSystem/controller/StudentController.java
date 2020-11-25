@@ -5,7 +5,12 @@ import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
+import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
+import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
+import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
+import com.mds.libraryMgmtSystem.repository.StudentRepository;
+import com.mds.libraryMgmtSystem.service.CredentialService;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import com.mds.libraryMgmtSystem.service.StudentService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
@@ -22,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.lang.System.out;
+import static java.lang.System.setOut;
 
 @RestController
 @CrossOrigin
@@ -34,6 +40,11 @@ public class StudentController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CredentialRepository credentialRepository;
+    @Autowired
+    private CredentialService credentialService;
+    @Autowired
+    private StudentRepository studentRepository;
+
 
 
     @GetMapping(value = "/students")
@@ -48,13 +59,14 @@ public class StudentController {
         return new BaseResponse(GlobalConstant.success, student, GlobalConstant.Message.success_message);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Student> login(Authentication authentication){
-//        UserDetailInfo userDetailInfo = (UserDetailInfo) authentication.getPrincipal();
-//        Student student = userDetailInfo.getStudent();
-//        student.setPassword(null);
-//        return ResponseEntity.ok(student);
-//    }
+    @PostMapping("/student/login")
+    public ResponseEntity<Credential> login(Authentication authentication){
+        UserDetailInfo userDetailInfo = (UserDetailInfo) authentication.getPrincipal();
+        Credential credential = userDetailInfo.getCredential();
+//        credential.setEmail(null);
+        credential.setPassword(null);
+        return ResponseEntity.ok(credential);
+    }
 
     @GetMapping(value="/student/{id}")
     public BaseResponse getById(@PathVariable Long id){
@@ -69,20 +81,22 @@ public class StudentController {
     }
 
     @PostMapping("/create/student")
-    public BaseResponse createStudent(@RequestBody StudentPojo studentPojo, Student student) {
-        Student students;
+    public BaseResponse createStudent(@RequestBody StudentPojo studentPojo) {
+        Student students = null;
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-            if(email==null || email.isPresent()){
-                System.out.println("Already Email Exists");
-                return null;
+
+            Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getRollNo());
+            Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
+
+            if(!email.isPresent() && !optionalStudent.isPresent() && optionalLibraryCard.isPresent()){
+                String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
+                studentPojo.setPassword(encriptedPassword);
+                students = studentService.addStudent(studentPojo);
+            }else{
+                // throw
             }
-
-            String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
-            studentPojo.setPassword(encriptedPassword);
-            students = studentService.addStudent(studentPojo);
-
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
@@ -92,38 +106,44 @@ public class StudentController {
     }
 
 
-    @PutMapping (value = "/student")
+    @PutMapping (value = "/student/update")
     public BaseResponse updateStudent(@RequestBody StudentPojo studentPojo) {
 
-        Student students;
+        Student students =null;
 
         try{
             Student student = studentService.findById(studentPojo.getId());
-//            Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
-//            if(!libraryCard.isPresent()){
-//                throw new EntityNotFoundException("LibraryCard ID not found");
-//            }
-
-            Student studentId = studentService.findById(student.getId());
-            Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-
-//            List<Student> rollNo = studentService.findByRollNo(studentPojo.getRollNo());
-
-            if(student==null  ) {
-//|| (email.isPresent())  && (student != studentId)
-                return null;
+            Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+            if(!libraryCard.isPresent()){
+                throw new EntityNotFoundException("LibraryCardId Not Found");
             }
+//            Optional<Student> optionalStudentId = studentRepository.findById(studentPojo.getId());
+            Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getRollNo());
+            Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
+            Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
+
+            out.println(optionalLibraryCard);
+            out.println(optionalStudent);
+            if(!optionalCredential.isPresent() && !optionalStudent.isPresent()
+                    && optionalLibraryCard.isPresent()){
+
                 student.setName(studentPojo.getName());
-                studentPojo.setEmail(studentPojo.getEmail());
                 student.setAddress(studentPojo.getAddress());
                 student.setPhone(studentPojo.getPhone());
-                student.setRollNo(studentPojo.getRollNo());
                 student.setDateOfBirth(studentPojo.getDateOfBirth());
-                studentPojo.setPassword(studentPojo.getPassword());
-//                student.setLibraryCard(libraryCard.getId());
+                student.setRollNo(studentPojo.getRollNo());
+                student.setLibraryCard(libraryCard.get());
                 students = studentService.save(student);
+                Credential credential = new Credential();
+                credential.setEmail(studentPojo.getEmail());
+                String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
+                studentPojo.setPassword(encryptPassword);
+//                credential.setRole(studentPojo.getRole());
+                credential.setUser(student);
+                credentialService.save(credential);
+            }else{
 
-
+            }
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, e.getMessage());

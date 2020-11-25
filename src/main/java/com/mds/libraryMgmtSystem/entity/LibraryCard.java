@@ -61,4 +61,15 @@ public class LibraryCard {
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
+
+    @Override
+    public String toString() {
+        return "LibraryCard{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rollNo='" + rollNo + '\'' +
+                ", year='" + year + '\'' +
+                ", logoUrl='" + logoUrl + '\'' +
+                '}';
+    }
 }

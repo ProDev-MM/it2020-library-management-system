@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class AppController {
 
-    @GetMapping("/greet")
+    @GetMapping("/allow")
     public ResponseEntity<String> hello(){
         return ResponseEntity.ok("Hello Everyone!");
     }
 
-    @GetMapping("/student")
+    @GetMapping("/user")
     public ResponseEntity<String> staffAPI(){
         return ResponseEntity.ok("Staff but also Admin can accept this one!");
     }
 
-    @GetMapping("/librarian")
+    @GetMapping("/admin")
     public ResponseEntity<String> managerAPI(){
         return ResponseEntity.ok("Only Admin Can accept this one!");
     }

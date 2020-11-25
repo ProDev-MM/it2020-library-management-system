@@ -32,6 +32,14 @@ public class UserDetailInfo implements UserDetails {
         return this.credential.getPassword();
     }
 
+    public Credential getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
+    }
+
     @Override
     public String getUsername() {
         return this.credential.getEmail();

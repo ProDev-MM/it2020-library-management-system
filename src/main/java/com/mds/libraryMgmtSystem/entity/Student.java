@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 @Entity
 public class Student extends User{
+//
 
     @Column
     private String rollNo;

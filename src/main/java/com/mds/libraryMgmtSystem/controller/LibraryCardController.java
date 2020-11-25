@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -45,9 +46,10 @@ public class LibraryCardController {
     @PostMapping(value = "/libraryCard")
     public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
         try {
-            List<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCard.getRollNo());
-            if (lbC == null || !lbC.isEmpty() ){
+            Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
+            if (rollNo == null || rollNo.isPresent() ){
                 out.println("ALready RollNo Exists!");
+                out.println(rollNo);
                 return null;
             }
             libraryCard = libraryCardService.addLibraryCard(libraryCard);
@@ -78,10 +80,10 @@ public class LibraryCardController {
         LibraryCard libraryCards;
 
         try{
-            List<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
+            Optional<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
             LibraryCard libraryCard = libraryCardService.findById(libraryCardPojo.getId());
 
-            if(libraryCard==null || lbC== null || !lbC.isEmpty()) {
+            if(libraryCard==null || lbC== null || lbC.isPresent()) {
                 out.println("RollNo Already Exists");
                 return null;
             }
