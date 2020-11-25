@@ -5,9 +5,11 @@ import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.pojo.CredentialPojo;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
+import com.mds.libraryMgmtSystem.service.CredentialService;
 import com.mds.libraryMgmtSystem.service.LibrarianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,9 @@ public class LibrarianController {
 
     @Autowired
     private CredentialRepository credentialRepository;
+
+    @Autowired
+    private CredentialService credentialService;
 
     //New controller
     @GetMapping(value = "/librarians")
@@ -67,16 +72,16 @@ public class LibrarianController {
     }
 
     @PostMapping("/create/Librarian")
-    public BaseResponse createStudent(@RequestBody LibrarianPojo librarianPojo) {
+    public BaseResponse createLibrarian(@RequestBody LibrarianPojo librarianPojo) {
         Librarian librarians;
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-//            List<Student> stud = bookService.findByRollNo(student.getRollNo());
-//            if(email== null || email.isPresent()) {
-//                out.println("Already Email Exist");
-//                return null;
-//            }
+            if(email== null || email.isPresent()) {
+                out.println("Already Email Exist");
+                return null;
+            }
+
             String encriptedPassword = passwordEncoder.encode(librarianPojo.getPassword());
             librarianPojo.setPassword(encriptedPassword);
             librarians = librarianService.addLibrarian(librarianPojo);
@@ -101,34 +106,64 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
+//    @PutMapping(value = "/update/librarian")
+//    public BaseResponse updateLibrarian(@RequestBody CredentialPojo credentialPojo) {
+//        Credential credentials;
+//        try {
+//            Credential credential = credentialService.findById(credentialPojo.getId());
+//
+//            if(credential == null){
+//                return  null;
+//            }
+//            credential.setEmail(credentialPojo.getEmail());
+//            credential.setPassword(credentialPojo.getPassword());
+//            credential.setRole(credentialPojo.getRole());
+//            credential.setUser(credentialPojo.getUser());
+//
+//           credentials = credentialService.save(credential);
+//
+//        } catch (Exception e) {
+//            out.println("Error occur " + e.getMessage());
+//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+//        }
+//
+//        return new BaseResponse(GlobalConstant.success,credentials , GlobalConstant.Message.success_message);
+//    }
 
-    @PutMapping(value = "/librarian")
-    public BaseResponse updateLibrarian(@RequestBody LibrarianPojo librarianPojo) {
-        Librarian librarians;
-        try {
-            Librarian librarian = librarianService.findById(librarianPojo.getId());
-            Librarian librarianId = librarianService.findById(librarian.getId());
-            Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-
-            if (librarian == null || (email.isPresent()) && (librarian != librarianId)) {
-                out.println("Email Already Exists");
-                return null;
-            }
-            librarian.setName(librarianPojo.getName());
-            librarianPojo.setEmail(librarianPojo.getEmail());
-            librarian.setAddress(librarianPojo.getAddress());
-            librarian.setPhone(librarianPojo.getPhone());
-            librarianPojo.setPassword(librarianPojo.getPassword());
-            librarian.setPosition(librarianPojo.getPosition());
-            librarians = librarianService.save(librarian);
-
-        } catch (Exception e) {
-            out.println("Error occur " + e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-        }
-
-        return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
-
-    }
+//    @PutMapping(value = "/update/librarian")
+//    public BaseResponse updateLibrarian(@RequestBody LibrarianPojo librarianPojo) {
+//        Librarian librarians;
+//        try {
+//            Librarian librarian = librarianService.findById(librarianPojo.getId());
+//
+////            Librarian librarianId = librarianService.findById(librarian.getId());
+////            Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
+////
+////            if (librarian == null || (email.isPresent()) && (librarian != librarianId)) {
+////                out.println("Email Already Exists");
+////                return null;
+////            }
+//            if(librarian == null){
+//                return  null;
+//            }
+//            librarian.setName(librarianPojo.getName());
+//            librarian.setAddress(librarianPojo.getAddress());
+//            librarian.setPhone(librarianPojo.getPhone());
+//            librarian.setPosition(librarianPojo.getPosition());
+//            librarians = librarianService.save(librarian);
+//            Credential credential = new Credential();
+//            credential.setEmail(librarianPojo.getEmail());
+//            credential.setPassword(librarianPojo.getPassword());
+//            credential.setRole(librarianPojo.getRole());
+//            credential.setUser(librarian);
+//            credentialService.save(credential);
+//
+//        } catch (Exception e) {
+//            out.println("Error occur " + e.getMessage());
+//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+//        }
+//
+//        return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
+//    }
 
 }

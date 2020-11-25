@@ -69,23 +69,23 @@ public class StudentController {
     }
 
     @PostMapping("/create/student")
-    public BaseResponse createStudent(@RequestBody StudentPojo studentPojo) {
+    public BaseResponse createStudent(@RequestBody StudentPojo studentPojo, Student student) {
         Student students;
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-//            List<Student> stud = bookService.findByRollNo(student.getRollNo());
-//            if(email== null || email.isPresent()) {
-//                out.println("Already Email Exist");
-//                return null;
-//            }
+            if(email==null || email.isPresent()){
+                System.out.println("Already Email Exists");
+                return null;
+            }
+
             String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
             studentPojo.setPassword(encriptedPassword);
             students = studentService.addStudent(studentPojo);
 
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+            return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
         }
 
         return new BaseResponse(GlobalConstant.success, students, GlobalConstant.Message.success_message);
