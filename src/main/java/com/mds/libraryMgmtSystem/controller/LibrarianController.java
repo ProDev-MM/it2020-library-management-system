@@ -107,21 +107,24 @@ public class LibrarianController {
         Librarian librarians = null;
         try {
             Librarian librarian = librarianService.findById(librarianPojo.getId());
+            Credential credential = credentialService.findById(librarianPojo.getId());
+            Optional<Librarian> optionalLibrarian = librarianService.getById(librarianPojo.getId());
             Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-
-            if (!email.isPresent()){
+            out.println(librarian);
+            out.println(credential);
+            if (!email.isPresent() || optionalLibrarian.isPresent()){
                 librarian.setName(librarianPojo.getName());
                 librarian.setAddress(librarianPojo.getAddress());
                 librarian.setPhone(librarianPojo.getPhone());
                 librarian.setPosition(librarianPojo.getPosition());
                 librarians = librarianService.save(librarian);
-                Credential credential = new Credential();
                 credential.setEmail(librarianPojo.getEmail());
                 String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
-                librarianPojo.setPassword(encryptPassword);
-//                credential.setRole(librarianPojo.getRole());
-                credential.setUser(librarian);
+                credential.setPassword(encryptPassword);
                 credentialService.save(credential);
+            }else {
+                out.println("!Email already");
+
             }
 
 
@@ -130,7 +133,7 @@ public class LibrarianController {
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
 
-        return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
+        return new BaseResponse(GlobalConstant.success , librarians, GlobalConstant.Message.success_message);
     }
 
 }

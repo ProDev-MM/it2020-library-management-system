@@ -29,12 +29,7 @@ public class LibrarianService {
     }
 
     public Librarian addLibrarian(LibrarianPojo librarianPojo) {
-//        Optional<Librarian> optionalLibrarian = librarianRepository.findByEmail(librarian.getEmail());
-//        if(optionalLibrarian.isPresent()){
-//            throw new EntityExistsException(" User with " + librarian.getEmail() + " already exist!");
-//        }
-
-        // sample
+//
         Librarian librarian = new Librarian();
         librarian.setName(librarianPojo.getName()); // .......
         librarian.setAddress(librarianPojo.getAddress());
@@ -57,6 +52,10 @@ public class LibrarianService {
 
     public Librarian save(Librarian librarian) {
         return librarianRepository.save(librarian);
+    }
+
+    public Optional<Librarian> getById(Long id) {
+        return librarianRepository.findById(id);
     }
 //
 //    public Optional<Credential> findByEmail(String email) {

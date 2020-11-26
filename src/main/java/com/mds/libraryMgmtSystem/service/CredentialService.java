@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.service;
 
 import com.mds.libraryMgmtSystem.entity.Credential;
+import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,12 @@ public class CredentialService {
         credentialRepository.deleteById(id);
     }
 
-    public Credential findById(long id) {
+    public Credential findById(Long id) {
         return credentialRepository.findById(id).orElse(null);
     }
 
     public Credential save(Credential credential) {
         return credentialRepository.save(credential);
     }
-
 
 }

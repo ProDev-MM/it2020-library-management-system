@@ -86,16 +86,23 @@ public class StudentController {
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-
-            Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getRollNo());
+            Optional<LibraryCard> optionalLibraryCardRollNo = libraryCardService.findByRollNo(studentPojo.getRollNo());
             Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
-
-            if(!email.isPresent() && !optionalStudent.isPresent() && optionalLibraryCard.isPresent()){
+            if(!email.isPresent() && !optionalStudent.isPresent() && optionalLibraryCardRollNo.isPresent()){
                 String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
                 studentPojo.setPassword(encriptedPassword);
                 students = studentService.addStudent(studentPojo);
             }else{
-                // throw
+                if (email.isPresent()){
+                    throw new EntityNotFoundException("email already exists");
+                }
+                if (optionalStudent.isPresent()){
+                    throw new EntityNotFoundException("rollno already exists");
+                }
+                if (!optionalLibraryCardRollNo.isPresent()){
+                    throw new EntityNotFoundException("Library's rollNo and rollNo must be same");
+                }
+
             }
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
@@ -121,6 +128,8 @@ public class StudentController {
             Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getRollNo());
             Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
             Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
+            Credential credential = credentialService.findById(studentPojo.getId());
+
 
             out.println(optionalLibraryCard);
             out.println(optionalStudent);
@@ -134,12 +143,9 @@ public class StudentController {
                 student.setRollNo(studentPojo.getRollNo());
                 student.setLibraryCard(libraryCard.get());
                 students = studentService.save(student);
-                Credential credential = new Credential();
                 credential.setEmail(studentPojo.getEmail());
                 String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
-                studentPojo.setPassword(encryptPassword);
-//                credential.setRole(studentPojo.getRole());
-                credential.setUser(student);
+                credential.setPassword(encryptPassword);
                 credentialService.save(credential);
             }else{
 

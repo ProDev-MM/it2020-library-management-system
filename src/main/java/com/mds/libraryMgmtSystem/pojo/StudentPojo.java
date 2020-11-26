@@ -1,6 +1,8 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
+import com.mds.libraryMgmtSystem.entity.Student;
 
 import java.time.LocalDate;
 
@@ -16,18 +18,8 @@ public class StudentPojo {
     private String role;
     private String libraryCardRollNo;
 
-    public StudentPojo(Long id, String name, String email, String address, String phone, String rollNo, LocalDate dateOfBirth,
-                       String password, String role, String libraryCardRollNo) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.rollNo = rollNo;
-        this.dateOfBirth = dateOfBirth;
-        this.password = password;
-        this.role = role;
-        this.libraryCardRollNo = libraryCardRollNo;
+    public StudentPojo() {
+
     }
 
     public Long getId() {
@@ -109,5 +101,6 @@ public class StudentPojo {
     public void setLibraryCardRollNo(String libraryCardRollNo) {
         this.libraryCardRollNo = libraryCardRollNo;
     }
+
 }
 

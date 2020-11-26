@@ -12,5 +12,4 @@ public interface CredentialRepository extends JpaRepository<Credential, Long> {
 
     @Query(value = "select c from Credential c where c.email = ?1")
     Optional<Credential> findByEmail(String email);
-
 }

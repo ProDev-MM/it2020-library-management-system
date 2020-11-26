@@ -38,7 +38,6 @@ public class StudentService {
 
     public Student addStudent(StudentPojo studentPojo) {
         Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
-//       Optional<LibraryCard> libraryCard = Optional.ofNullable(libraryCardService.findById(studentPojo.getLibraryCardId()));
         if(!optionalLibraryCard.isPresent()){
             throw new EntityNotFoundException("LibraryCard's RollNo Not Found");
         }
@@ -50,7 +49,6 @@ public class StudentService {
         student.setDateOfBirth(studentPojo.getDateOfBirth());
         student.setRollNo(studentPojo.getRollNo());
         student.setLibraryCard(optionalLibraryCard.get());
-//        student.setPosition(studentPojo.getPosition());
         studentRepository.save(student);
         Credential credential = new Credential();
         credential.setEmail(studentPojo.getEmail());// ........
