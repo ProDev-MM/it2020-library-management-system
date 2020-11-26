@@ -1,11 +1,8 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
-import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
-import com.mds.libraryMgmtSystem.entity.Student;
-import com.mds.libraryMgmtSystem.pojo.CredentialPojo;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
@@ -39,7 +36,6 @@ public class LibrarianController {
     @Autowired
     private CredentialService credentialService;
 
-    //New controller
     @GetMapping(value = "/librarians")
     public BaseResponse getLibrarian() {
         List<Librarian> librarian;

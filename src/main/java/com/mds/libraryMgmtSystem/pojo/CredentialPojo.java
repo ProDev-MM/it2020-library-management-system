@@ -8,8 +8,6 @@ public class CredentialPojo {
     private String password;
     private String role;
 
-    private User user;
-
     public CredentialPojo(){
 
     }
@@ -46,11 +44,5 @@ public class CredentialPojo {
         this.role = role;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

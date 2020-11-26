@@ -48,7 +48,7 @@ public class LibraryCardController {
         try {
             Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
             if (rollNo == null || rollNo.isPresent() ){
-                out.println("ALready RollNo Exists!");
+                out.println("Already LibraryCard RollNo Exists!");
                 out.println(rollNo);
                 return null;
             }
@@ -80,16 +80,19 @@ public class LibraryCardController {
         LibraryCard libraryCards;
 
         try{
-            Optional<LibraryCard> lbC = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
             LibraryCard libraryCard = libraryCardService.findById(libraryCardPojo.getId());
+            Optional<LibraryCard> libraryCardRollNo = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
+            if(libraryCardRollNo.isPresent()){
+                out.println("Already LibraryCard RollNo Exists!");
+                libraryCard.setName(libraryCardPojo.getName());
+                libraryCard.setYear(libraryCardPojo.getYear());
 
-            if(libraryCard==null || lbC== null || lbC.isPresent()) {
-                out.println("RollNo Already Exists");
-                return null;
+            }else{
+                libraryCard.setName(libraryCardPojo.getName());
+                libraryCard.setRollNo(libraryCardPojo.getRollNo());
+                libraryCard.setYear(libraryCardPojo.getYear());
             }
-            libraryCard.setName(libraryCardPojo.getName());
-            libraryCard.setRollNo(libraryCardPojo.getRollNo());
-            libraryCard.setYear(libraryCardPojo.getYear());
+
             libraryCards = libraryCardService.updateLibraryCard(libraryCard);
 
         }catch(Exception e) {

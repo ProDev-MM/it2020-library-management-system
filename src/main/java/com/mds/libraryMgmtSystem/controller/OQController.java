@@ -66,12 +66,9 @@ public class OQController {
 
     @PutMapping(value = "/oq")
     public BaseResponse updateOQ(@RequestBody OQPojo oqPojo) {
-
         OQ oqs;
-
         try {
             OQ oq = oqService.findById(oqPojo.getId());
-
             if (oq == null) {
                 return null;
             }
