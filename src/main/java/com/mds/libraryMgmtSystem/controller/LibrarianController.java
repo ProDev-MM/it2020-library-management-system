@@ -140,7 +140,7 @@ public class LibrarianController {
                     credential.setPassword(encryptPassword);
                     credentialService.save(credential);
                 } else {
-                    throw new EntityExistsException("email already exists");
+                    throw new EntityExistsException("Email already exists");
                 }
             }else {
                 throw new EntityNotFoundException(librarianPojo.getId() + "Id exists");

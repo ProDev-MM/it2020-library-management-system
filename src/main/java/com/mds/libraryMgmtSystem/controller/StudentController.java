@@ -93,7 +93,7 @@ public class StudentController {
             }
             out.println(optionalLibraryCardRollNo.get().getRollNo());
             if(!email.isPresent() && optionalLibraryCardRollNo.isPresent()){
-//
+
                 String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
                 studentPojo.setPassword(encriptedPassword);
                 students = studentService.addStudent(studentPojo);

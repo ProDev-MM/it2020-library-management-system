@@ -4,11 +4,13 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
+import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +22,9 @@ import static java.lang.System.out;
 public class LibraryCardController {
     @Autowired
     private LibraryCardService libraryCardService;
+
     @Autowired
-    private LibrarianRepository librarianRepository;
+    private LibraryCardRepository libraryCardRepository;
 
     @GetMapping(value = "/libraryCards")
     public BaseResponse getLibraryCard(){
@@ -51,12 +54,12 @@ public class LibraryCardController {
     public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
         try {
             Optional<LibraryCard> name = libraryCardService.findByName(libraryCard.getName());
-
             Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
 
              if (rollNo == null || rollNo.isPresent() ){
                 out.println(rollNo);
-                 out.println(name);
+                out.println(name);
+                out.println("Already RollNo Exists!");
                 return null;
             } else{
                 libraryCard = libraryCardService.addLibraryCard(libraryCard);
@@ -83,26 +86,30 @@ public class LibraryCardController {
     @PutMapping (value = "/libraryCard")
     public BaseResponse updateLibraryCard(@RequestBody LibraryCardPojo libraryCardPojo) {
         LibraryCard libraryCards;
-
         try{
-            LibraryCard libraryCard = libraryCardService.findById(libraryCardPojo.getId());
-            Optional<LibraryCard> libraryCardRollNo = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
-            if(libraryCardRollNo.isPresent()){
-                out.println("Already LibraryCard RollNo Exists!");
-                libraryCard.setName(libraryCardPojo.getName());
-                libraryCard.setYear(libraryCardPojo.getYear());
-
+            if(this.libraryCardRepository.existsById(libraryCardPojo.getId())){
+                LibraryCard libraryCard= libraryCardService.findById(libraryCardPojo.getId());
+                Optional<LibraryCard> libraryCardRollNo = libraryCardService.findByRollNo(libraryCardPojo.getRollNo());
+                if(libraryCardRollNo.isPresent() && libraryCardRollNo.get().getId() == libraryCard.getId()){
+                    libraryCard.setName(libraryCardPojo.getName());
+                    libraryCard.setRollNo(libraryCardPojo.getRollNo());
+                    libraryCard.setYear(libraryCardPojo.getYear());
+                    libraryCards = libraryCardService.updateLibraryCard(libraryCard);
+                }else if(!libraryCardRollNo.isPresent()){
+                    libraryCard.setName(libraryCardPojo.getName());
+                    libraryCard.setRollNo(libraryCardPojo.getRollNo());
+                    libraryCard.setYear(libraryCardPojo.getYear());
+                    libraryCards = libraryCardService.updateLibraryCard(libraryCard);
+                }else{
+                    throw new EntityExistsException("Already roll no exists");
+                }
             }else{
-                libraryCard.setName(libraryCardPojo.getName());
-                libraryCard.setRollNo(libraryCardPojo.getRollNo());
-                libraryCard.setYear(libraryCardPojo.getYear());
+                throw new EntityNotFoundException(libraryCardPojo.getId()+" not found");
             }
-
-            libraryCards = libraryCardService.updateLibraryCard(libraryCard);
 
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+            return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
         }
 
         return new BaseResponse(GlobalConstant.success, libraryCards,GlobalConstant.Message.success_message);
