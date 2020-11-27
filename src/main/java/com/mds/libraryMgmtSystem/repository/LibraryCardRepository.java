@@ -13,4 +13,5 @@ public interface LibraryCardRepository extends JpaRepository<LibraryCard, Long> 
     @Query("select l from LibraryCard l where l.rollNo = ?1")
     Optional<LibraryCard> findByRollNo(String rollNo);
 
+    Optional<LibraryCard> findByName(String name);
 }

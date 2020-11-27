@@ -6,11 +6,15 @@ import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+
+import static java.lang.System.out;
 
 @Service
 public class LibrarianService {
@@ -20,8 +24,18 @@ public class LibrarianService {
     @Autowired
     private CredentialRepository credentialRepository;
 
+    @Autowired
+    private LibrarianService librarianService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    @Autowired
+    private CredentialService credentialService;
+
     public List<Librarian> getLibrarian() {
-        return  librarianRepository.findAll();
+        return librarianRepository.findAll();
     }
 
     public Librarian findById(Long id) {
@@ -57,8 +71,6 @@ public class LibrarianService {
     public Optional<Librarian> getById(Long id) {
         return librarianRepository.findById(id);
     }
-//
-//    public Optional<Credential> findByEmail(String email) {
-//        return credentialRepository.findByEmail(email);
-//    }
+
 }
+

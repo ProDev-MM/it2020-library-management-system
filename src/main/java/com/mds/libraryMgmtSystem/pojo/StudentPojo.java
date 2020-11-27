@@ -12,7 +12,6 @@ public class StudentPojo {
     private String email;
     private String address;
     private String phone;
-    private String rollNo;
     private LocalDate dateOfBirth;
     private String password;
     private String role;
@@ -52,14 +51,6 @@ public class StudentPojo {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getRollNo() {
-        return rollNo;
-    }
-
-    public void setRollNo(String rollNo) {
-        this.rollNo = rollNo;
     }
 
     public LocalDate getDateOfBirth() {

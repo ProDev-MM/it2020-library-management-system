@@ -3,11 +3,13 @@ package com.mds.libraryMgmtSystem.controller;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
+import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import static java.lang.System.out;
 public class LibraryCardController {
     @Autowired
     private LibraryCardService libraryCardService;
+    @Autowired
+    private LibrarianRepository librarianRepository;
 
     @GetMapping(value = "/libraryCards")
     public BaseResponse getLibraryCard(){
@@ -46,13 +50,17 @@ public class LibraryCardController {
     @PostMapping(value = "/libraryCard")
     public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
         try {
+            Optional<LibraryCard> name = libraryCardService.findByName(libraryCard.getName());
+
             Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
-            if (rollNo == null || rollNo.isPresent() ){
-                out.println("Already LibraryCard RollNo Exists!");
+
+             if (rollNo == null || rollNo.isPresent() ){
                 out.println(rollNo);
+                 out.println(name);
                 return null;
+            } else{
+                libraryCard = libraryCardService.addLibraryCard(libraryCard);
             }
-            libraryCard = libraryCardService.addLibraryCard(libraryCard);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -60,8 +68,6 @@ public class LibraryCardController {
         return new BaseResponse(GlobalConstant.success, libraryCard, GlobalConstant.Message.success_message);
 
     }
-
-
 
     @DeleteMapping(value="/libraryCard/{id}")
     public BaseResponse deleteLibraryCard(@PathVariable Long id){
@@ -74,7 +80,6 @@ public class LibraryCardController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-//resolve conflict
     @PutMapping (value = "/libraryCard")
     public BaseResponse updateLibraryCard(@RequestBody LibraryCardPojo libraryCardPojo) {
         LibraryCard libraryCards;

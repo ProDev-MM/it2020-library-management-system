@@ -8,8 +8,7 @@ import java.time.LocalDate;
 public class Student extends User{
 //
 
-    @Column
-    private String rollNo;
+
 
     @Column
     private LocalDate dateOfBirth;
@@ -17,14 +16,6 @@ public class Student extends User{
     @OneToOne
     @JoinColumn(name = "libraryCard_id")
     private LibraryCard libraryCard;
-
-    public String getRollNo() {
-        return rollNo;
-    }
-
-    public void setRollNo(String rollNo) {
-        this.rollNo = rollNo;
-    }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;

@@ -38,16 +38,12 @@ public class StudentService {
 
     public Student addStudent(StudentPojo studentPojo) {
         Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
-        if(!optionalLibraryCard.isPresent()){
-            throw new EntityNotFoundException("LibraryCard's RollNo Not Found");
-        }
         // sample
         Student student = new Student();
         student.setName(studentPojo.getName()); // .......
         student.setAddress(studentPojo.getAddress());
         student.setPhone(studentPojo.getPhone());
         student.setDateOfBirth(studentPojo.getDateOfBirth());
-        student.setRollNo(studentPojo.getRollNo());
         student.setLibraryCard(optionalLibraryCard.get());
         studentRepository.save(student);
         Credential credential = new Credential();
@@ -69,9 +65,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Optional<Student> findByRollNo(String rollNo) {
-        return studentRepository.findByRollNo(rollNo);
-    }
+
 
 //    public Optional<Credential> findByEmail(String email) {
 //        return credentialRepository.findByEmail(email);

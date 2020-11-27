@@ -28,4 +28,7 @@ public class CredentialService {
         return credentialRepository.save(credential);
     }
 
+    public Credential findByUserId(Long id) {
+        return credentialRepository.findByUserId(id);
+    }
 }

@@ -22,6 +22,10 @@ public class LibraryCard {
     @Column
     private String logoUrl;
 
+    public LibraryCard() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -10,6 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    Optional<Student> findByRollNo(String rollNo);
 //    @Query(value = "select s from Student s where s.rollNo = ?1")
 }

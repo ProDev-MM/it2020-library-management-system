@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -86,21 +87,19 @@ public class StudentController {
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-            Optional<LibraryCard> optionalLibraryCardRollNo = libraryCardService.findByRollNo(studentPojo.getRollNo());
-            Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
-            if(!email.isPresent() && !optionalStudent.isPresent() && optionalLibraryCardRollNo.isPresent()){
+            Optional<LibraryCard> optionalLibraryCardRollNo = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+            if(!optionalLibraryCardRollNo.isPresent()){
+                throw new EntityNotFoundException("LibraryCard's RollNo Not Found");
+            }
+            out.println(optionalLibraryCardRollNo.get().getRollNo());
+            if(!email.isPresent() && optionalLibraryCardRollNo.isPresent()){
+//
                 String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
                 studentPojo.setPassword(encriptedPassword);
                 students = studentService.addStudent(studentPojo);
-            }else{
+            } else{
                 if (email.isPresent()){
                     throw new EntityNotFoundException("email already exists");
-                }
-                if (optionalStudent.isPresent()){
-                    throw new EntityNotFoundException("rollno already exists");
-                }
-                if (!optionalLibraryCardRollNo.isPresent()){
-                    throw new EntityNotFoundException("Library's rollNo and rollNo must be same");
                 }
 
             }
@@ -119,37 +118,44 @@ public class StudentController {
         Student students =null;
 
         try{
-            Student student = studentService.findById(studentPojo.getId());
-            Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
-            if(!libraryCard.isPresent()){
-                throw new EntityNotFoundException("LibraryCardId Not Found");
+            if (this.studentRepository.existsById(studentPojo.getId())) {
+                Student student = studentService.findById(studentPojo.getId());
+                Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+                if (!libraryCard.isPresent()) {
+                    throw new EntityNotFoundException("LibraryCardId Not Found");
+                }
+                Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+                Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
+                Credential credential = credentialService.findByUserId(studentPojo.getId());
+                if (optionalCredential.isPresent() && optionalCredential.get().getId() == studentPojo.getId()) {
+                    student.setName(studentPojo.getName());
+                    student.setAddress(studentPojo.getAddress());
+                    student.setPhone(studentPojo.getPhone());
+                    student.setDateOfBirth(studentPojo.getDateOfBirth());
+                    student.setLibraryCard(libraryCard.get());
+                    students = studentService.save(student);
+                    credential.setEmail(studentPojo.getEmail());
+                    String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
+                    credential.setPassword(encryptPassword);
+                    credentialService.save(credential);
+                } else if (!optionalCredential.isPresent()) {
+                    student.setName(studentPojo.getName());
+                    student.setAddress(studentPojo.getAddress());
+                    student.setPhone(studentPojo.getPhone());
+                    student.setDateOfBirth(studentPojo.getDateOfBirth());
+                    student.setLibraryCard(libraryCard.get());
+                    students = studentService.save(student);
+                    credential.setEmail(studentPojo.getEmail());
+                    String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
+                    credential.setPassword(encryptPassword);
+                    credentialService.save(credential);
+                }else {
+                    throw new EntityNotFoundException("Email already exists");
+                }
+            }else {
+                throw new EntityNotFoundException(studentPojo.getId() + "must be same");
             }
-//            Optional<Student> optionalStudentId = studentRepository.findById(studentPojo.getId());
-            Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getRollNo());
-            Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
-            Optional<Student> optionalStudent = studentService.findByRollNo(studentPojo.getRollNo());
-            Credential credential = credentialService.findById(studentPojo.getId());
 
-
-            out.println(optionalLibraryCard);
-            out.println(optionalStudent);
-            if(!optionalCredential.isPresent() && !optionalStudent.isPresent()
-                    && optionalLibraryCard.isPresent()){
-
-                student.setName(studentPojo.getName());
-                student.setAddress(studentPojo.getAddress());
-                student.setPhone(studentPojo.getPhone());
-                student.setDateOfBirth(studentPojo.getDateOfBirth());
-                student.setRollNo(studentPojo.getRollNo());
-                student.setLibraryCard(libraryCard.get());
-                students = studentService.save(student);
-                credential.setEmail(studentPojo.getEmail());
-                String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
-                credential.setPassword(encryptPassword);
-                credentialService.save(credential);
-            }else{
-
-            }
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
