@@ -1,20 +1,26 @@
 package com.mds.libraryMgmtSystem.pojo;
 
-import com.mds.libraryMgmtSystem.entity.Librarian;
-import com.mds.libraryMgmtSystem.entity.LibraryCard;
-import com.mds.libraryMgmtSystem.entity.Student;
-
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class StudentPojo {
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String address;
+    @NotEmpty
     private String phone;
+    @NotNull
     private LocalDate dateOfBirth;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String role;
+    @NotEmpty
     private String libraryCardRollNo;
 
     public StudentPojo() {

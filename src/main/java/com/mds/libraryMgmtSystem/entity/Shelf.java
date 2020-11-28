@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "shelf")
@@ -10,6 +11,7 @@ public class Shelf {
     private Long id;
 
     @Column
+    @NotEmpty
     private String room;
 
     public Long getId() {

@@ -6,6 +6,7 @@ import com.mds.libraryMgmtSystem.pojo.ShelfPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class ShelfController {
     }
 
     @PostMapping(value = "/shelf")
-    public BaseResponse createShelf(@RequestBody Shelf shelf){
+    public BaseResponse createShelf(@Validated @RequestBody Shelf shelf){
         try {
             shelf = shelfService.addShelf(shelf);
         }catch(Exception e) {
@@ -67,7 +68,7 @@ public class ShelfController {
     }
 
     @PutMapping (value = "/shelf")
-    public BaseResponse updateStudent(@RequestBody ShelfPojo shelfPojo) {
+    public BaseResponse updateStudent(@Validated @RequestBody ShelfPojo shelfPojo) {
         Shelf shelves;
 
         try{

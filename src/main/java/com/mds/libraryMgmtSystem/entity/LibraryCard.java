@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "library_card")
@@ -11,15 +12,19 @@ public class LibraryCard {
     private  Long id;
 
     @Column
+    @NotEmpty
     private String name;
 
     @Column
+    @NotEmpty
     private String rollNo;
 
     @Column
+    @NotEmpty
     private String year;
 
     @Column
+    @NotEmpty
     private String logoUrl;
 
     public LibraryCard() {

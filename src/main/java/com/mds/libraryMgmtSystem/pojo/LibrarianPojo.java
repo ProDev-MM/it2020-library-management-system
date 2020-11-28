@@ -2,13 +2,21 @@ package com.mds.libraryMgmtSystem.pojo;
 
 import com.mds.libraryMgmtSystem.entity.Librarian;
 
+import javax.validation.constraints.NotEmpty;
+
 public class LibrarianPojo {
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String address;
+    @NotEmpty
     private String phone;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String role;
     private Librarian.Position position;
 

@@ -7,6 +7,7 @@ import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/category")
-    public BaseResponse createCategory(@RequestBody Category category){
+    public BaseResponse createCategory(@Validated @RequestBody Category category){
         try {
             category = categoryService.addCategory(category);
         }catch(Exception e) {
@@ -72,7 +73,7 @@ public class CategoryController {
     }
 
     @PutMapping (value = "/category")
-    public BaseResponse updateCategory(@RequestBody CategoryPojo categoryPojo) {
+    public BaseResponse updateCategory(@Validated @RequestBody CategoryPojo categoryPojo) {
         Category categories;
 
         try{

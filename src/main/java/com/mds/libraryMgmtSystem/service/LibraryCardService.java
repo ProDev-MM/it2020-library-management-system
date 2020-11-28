@@ -37,7 +37,5 @@ public class LibraryCardService {
         return libraryCardRepository.findByRollNo(rollNo);
     }
 
-    public Optional<LibraryCard> findByName(String name) {
-        return libraryCardRepository.findByName(name);
-    }
+
 }

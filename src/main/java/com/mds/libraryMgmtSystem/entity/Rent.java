@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -12,12 +13,15 @@ public class Rent {
     private Long id;
 
     @Column
+    @NotNull
     private LocalDate rentFromDate;
 
     @Column
+    @NotNull
     private LocalDate rentToDate;
 
     @Column
+    @NotNull
     private LocalDate returnDate;
 
     @Column

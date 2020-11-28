@@ -1,12 +1,18 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class OQPojo {
     private Long id;
+    @NotEmpty
     private String subject;
+    @NotEmpty
     private String pdfUrl;
+    @NotEmpty
     private String year;
+    @NotNull
     private LocalDate postedDate;
 
     @Override

@@ -12,6 +12,7 @@ import com.mds.libraryMgmtSystem.service.LibrarianService;
 import com.mds.libraryMgmtSystem.service.RentService;
 import com.mds.libraryMgmtSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -61,7 +62,7 @@ public class RentController {
 
 
     @PostMapping("/create/rent")
-    public BaseResponse createRent(@RequestBody RentPojo rentPojo){
+    public BaseResponse createRent(@Validated @RequestBody RentPojo rentPojo){
         Rent rent;
         try{
             rent = rentService.addRent(rentPojo);
@@ -87,10 +88,9 @@ public class RentController {
     }
 
     @PutMapping (value = "/update/student")
-    public BaseResponse updateRent(@RequestBody RentPojo rentPojo) {
+    public BaseResponse updateRent(@Validated @RequestBody RentPojo rentPojo) {
 
        Rent rents;
-
         try{
             Optional<Book> book = Optional.ofNullable(bookService.findById(rentPojo.getBookId()));
             if(!book.isPresent()){

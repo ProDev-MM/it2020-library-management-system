@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "book")
@@ -12,15 +13,18 @@ public class Book {
     private Long id;
 
     @Column
+    @NotEmpty
     private String name;
 
     @Column
+    @NotEmpty
     private String author;
 
     @Column
     private String edition;
 
     @Column
+    @NotEmpty
     private String imgUrl;
 
     @Column

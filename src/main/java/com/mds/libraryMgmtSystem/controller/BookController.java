@@ -8,6 +8,7 @@ import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.pojo.BookPojo;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class BookController {
 
 
     @PostMapping(value = "/book")
-    public BaseResponse createBook(@RequestBody Book book){
+    public BaseResponse createBook(@Validated @RequestBody Book book){
         try {
             book = bookService.addBook(book);
         }catch(Exception e) {
@@ -99,7 +100,7 @@ public class BookController {
     }
 
     @PutMapping (value = "/book")
-    public BaseResponse updateBook(@RequestBody BookPojo bookPojo) {
+    public BaseResponse updateBook(@Validated @RequestBody BookPojo bookPojo) {
         Book books;
 
         try{

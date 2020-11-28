@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,9 +14,11 @@ public class Category {
     private Long id;
 
     @Column
+    @NotEmpty
     private String type;
 
     @Column
+    @NotEmpty
     private String description;
 
 

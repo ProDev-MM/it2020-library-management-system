@@ -6,6 +6,7 @@ import com.mds.libraryMgmtSystem.pojo.OQPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.OQService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class OQController {
     }
 
     @PostMapping(value = "/oq")
-    public BaseResponse createOQ(@RequestBody OQ oq) {
+    public BaseResponse createOQ(@Validated @RequestBody OQ oq) {
         try {
             oq = oqService.addOQ(oq);
         } catch (Exception e) {
@@ -65,7 +66,7 @@ public class OQController {
     }
 
     @PutMapping(value = "/oq")
-    public BaseResponse updateOQ(@RequestBody OQPojo oqPojo) {
+    public BaseResponse updateOQ(@Validated @RequestBody OQPojo oqPojo) {
         OQ oqs;
         try {
             OQ oq = oqService.findById(oqPojo.getId());

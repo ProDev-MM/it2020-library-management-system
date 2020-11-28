@@ -2,10 +2,15 @@ package com.mds.libraryMgmtSystem.pojo;
 
 import com.mds.libraryMgmtSystem.entity.User;
 
+import javax.validation.constraints.NotEmpty;
+
 public class CredentialPojo {
     private long id;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String role;
 
     public CredentialPojo(){

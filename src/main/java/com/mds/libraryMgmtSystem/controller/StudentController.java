@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
@@ -82,7 +83,7 @@ public class StudentController {
     }
 
     @PostMapping("/create/student")
-    public BaseResponse createStudent(@RequestBody StudentPojo studentPojo) {
+    public BaseResponse createStudent(@Validated @RequestBody StudentPojo studentPojo) {
         Student students = null;
 
         try {
@@ -112,7 +113,7 @@ public class StudentController {
 
 
     @PutMapping (value = "/student/update")
-    public BaseResponse updateStudent(@RequestBody StudentPojo studentPojo) {
+    public BaseResponse updateStudent(@Validated @RequestBody StudentPojo studentPojo) {
 
         Student students =null;
 
@@ -135,7 +136,7 @@ public class StudentController {
                     student.setDateOfBirth(studentPojo.getDateOfBirth());
                     student.setLibraryCard(libraryCard.get());
                     students = studentService.save(student);
-                    credential.setEmail(studentPojo.getEmail());
+                    //credential.setEmail(studentPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
                     credential.setPassword(encryptPassword);
                     credentialService.save(credential);

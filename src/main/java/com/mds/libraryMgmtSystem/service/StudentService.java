@@ -38,21 +38,21 @@ public class StudentService {
 
     public Student addStudent(StudentPojo studentPojo) {
         Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
-        // sample
+
         Student student = new Student();
-        student.setName(studentPojo.getName()); // .......
+        student.setName(studentPojo.getName());
         student.setAddress(studentPojo.getAddress());
         student.setPhone(studentPojo.getPhone());
         student.setDateOfBirth(studentPojo.getDateOfBirth());
         student.setLibraryCard(optionalLibraryCard.get());
         studentRepository.save(student);
         Credential credential = new Credential();
-        credential.setEmail(studentPojo.getEmail());// ........
+        credential.setEmail(studentPojo.getEmail());
         credential.setPassword(studentPojo.getPassword());
         credential.setRole(studentPojo.getRole());
         credential.setUser(student);
         credentialRepository.save(credential);
-        // sample
+
         return student;
     }
 

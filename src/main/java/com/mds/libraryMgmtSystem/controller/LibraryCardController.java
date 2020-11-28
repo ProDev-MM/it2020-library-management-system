@@ -3,11 +3,11 @@ package com.mds.libraryMgmtSystem.controller;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
-import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
@@ -51,14 +51,11 @@ public class LibraryCardController {
     }
 
     @PostMapping(value = "/libraryCard")
-    public BaseResponse createLibraryCard(@RequestBody LibraryCard libraryCard){
+    public BaseResponse createLibraryCard(@Validated @RequestBody LibraryCard libraryCard){
         try {
-            Optional<LibraryCard> name = libraryCardService.findByName(libraryCard.getName());
-            Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
 
-             if (rollNo == null || rollNo.isPresent() ){
-                out.println(rollNo);
-                out.println(name);
+            Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
+             if (rollNo.isPresent() ){
                 out.println("Already RollNo Exists!");
                 return null;
             } else{
@@ -84,7 +81,7 @@ public class LibraryCardController {
 
     }
     @PutMapping (value = "/libraryCard")
-    public BaseResponse updateLibraryCard(@RequestBody LibraryCardPojo libraryCardPojo) {
+    public BaseResponse updateLibraryCard(@Validated @RequestBody LibraryCardPojo libraryCardPojo) {
         LibraryCard libraryCards;
         try{
             if(this.libraryCardRepository.existsById(libraryCardPojo.getId())){

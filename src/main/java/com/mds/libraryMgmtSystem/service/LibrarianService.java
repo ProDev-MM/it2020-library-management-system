@@ -43,20 +43,20 @@ public class LibrarianService {
     }
 
     public Librarian addLibrarian(LibrarianPojo librarianPojo) {
-//
+
         Librarian librarian = new Librarian();
-        librarian.setName(librarianPojo.getName()); // .......
+        librarian.setName(librarianPojo.getName());
         librarian.setAddress(librarianPojo.getAddress());
         librarian.setPhone(librarianPojo.getPhone());
         librarian.setPosition(librarianPojo.getPosition());
         librarianRepository.save(librarian);
         Credential credential = new Credential();
-        credential.setEmail(librarianPojo.getEmail());// ........
+        credential.setEmail(librarianPojo.getEmail());
         credential.setPassword(librarianPojo.getPassword());
         credential.setRole(librarianPojo.getRole());
         credential.setUser(librarian);
         credentialRepository.save(credential);
-        // sample
+
         return librarian;
     }
 

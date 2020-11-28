@@ -1,20 +1,26 @@
 package com.mds.libraryMgmtSystem.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mds.libraryMgmtSystem.entity.Rent;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class RentPojo {
     private Long id;
+    @NotNull
     private LocalDate rentFromDate;
+    @NotNull
     private LocalDate rentToDate;
+    @NotNull
     private LocalDate returnDate;
     private Integer fine;
     private Rent.Status status;
 
+    @NotNull
     private Long studentId;
+    @NotNull
     private Long bookId;
+    @NotNull
     private Long librarianId;
 
     public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, Integer fine, Rent.Status status, Long studentId, Long bookId, Long librarianId) {

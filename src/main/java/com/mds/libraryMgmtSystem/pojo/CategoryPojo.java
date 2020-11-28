@@ -1,8 +1,12 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import javax.validation.constraints.NotEmpty;
+
 public class CategoryPojo {
     private Long id;
+    @NotEmpty
     private String type;
+    @NotEmpty
     private String description;
 
     public CategoryPojo(Long id, String type, String description) {

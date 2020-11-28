@@ -1,7 +1,10 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import javax.validation.constraints.NotEmpty;
+
 public class ShelfPojo {
     private Long id;
+    @NotEmpty
     private String room;
 
     public ShelfPojo(Long id, String room) {

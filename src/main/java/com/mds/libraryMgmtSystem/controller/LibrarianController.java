@@ -76,7 +76,7 @@ public class LibrarianController {
     }
 
     @PostMapping("/create/Librarian")
-    public BaseResponse createLibrarian(@RequestBody LibrarianPojo librarianPojo) {
+    public BaseResponse createLibrarian(@Validated @RequestBody LibrarianPojo librarianPojo) {
         Librarian librarians = null;
 
         try {
@@ -111,7 +111,7 @@ public class LibrarianController {
 
 
     @PutMapping(value = "/update/librarian")
-    public BaseResponse updateLibrarian(@RequestBody LibrarianPojo librarianPojo) {
+    public BaseResponse updateLibrarian(@Validated @RequestBody LibrarianPojo librarianPojo) {
         Librarian librarians = null;
         try {
             if (this.librarianRepository.existsById(librarianPojo.getId())) {
@@ -126,7 +126,7 @@ public class LibrarianController {
                     librarian.setPhone(librarianPojo.getPhone());
                     librarian.setPosition(librarianPojo.getPosition());
                     librarians = librarianService.save(librarian);
-                    credentialServiceByUserId.setEmail(librarianPojo.getEmail());
+                    //credentialServiceByUserId.setEmail(librarianPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
                     credentialServiceByUserId.setPassword(encryptPassword);
                     credentialService.save(credentialServiceByUserId);

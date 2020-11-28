@@ -1,6 +1,8 @@
 package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -13,12 +15,19 @@ public class OQ {
     private Long id;
 
     @Column
+    @NotEmpty
     private String subject;
+
     @Column
+    @NotEmpty
     private String pdfUrl;
+
     @Column
+    @NotEmpty
     private String year;
+
     @Column
+    @NotNull
     private LocalDate postedDate;
 
     public Long getId() {

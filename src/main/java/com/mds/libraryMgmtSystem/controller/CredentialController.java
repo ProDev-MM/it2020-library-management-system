@@ -7,6 +7,7 @@ import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class CredentialController {
     }
 
     @PutMapping(value = "/update/credential")
-    public BaseResponse updateCredential(@RequestBody CredentialPojo credentialPojo) {
+    public BaseResponse updateCredential(@Validated @RequestBody CredentialPojo credentialPojo) {
         Credential credentials;
         try {
             Credential credential = credentialService.findById(credentialPojo.getId());

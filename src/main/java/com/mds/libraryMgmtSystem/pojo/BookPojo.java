@@ -3,12 +3,18 @@ package com.mds.libraryMgmtSystem.pojo;
 import com.mds.libraryMgmtSystem.entity.Category;
 import com.mds.libraryMgmtSystem.entity.Shelf;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
+
 public class BookPojo {
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String author;
     private String edition;
     private String isbn;
+    @NotEmpty
     private String imgUrl;
     private String price;
 
