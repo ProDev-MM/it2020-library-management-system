@@ -93,7 +93,6 @@ public class StudentController {
             }
             out.println(optionalLibraryCardRollNo.get().getRollNo());
             if(!email.isPresent() && optionalLibraryCardRollNo.isPresent()){
-
                 String encriptedPassword = passwordEncoder.encode(studentPojo.getPassword());
                 studentPojo.setPassword(encriptedPassword);
                 students = studentService.addStudent(studentPojo);
@@ -127,7 +126,9 @@ public class StudentController {
                 Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
                 Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
                 Credential credential = credentialService.findByUserId(studentPojo.getId());
-                if (optionalCredential.isPresent() && optionalCredential.get().getId() == studentPojo.getId()) {
+                out.println(credential.getUser().getId());
+                out.println(studentPojo.getId());
+                if (optionalCredential.isPresent() && credential.getUser().getId() == studentPojo.getId()) {
                     student.setName(studentPojo.getName());
                     student.setAddress(studentPojo.getAddress());
                     student.setPhone(studentPojo.getPhone());

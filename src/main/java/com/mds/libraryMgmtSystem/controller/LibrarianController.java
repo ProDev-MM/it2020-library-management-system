@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
@@ -116,29 +117,29 @@ public class LibrarianController {
             if (this.librarianRepository.existsById(librarianPojo.getId())) {
                 Librarian librarian = librarianService.findById(librarianPojo.getId());
                 Optional<Credential> email = credentialRepository.findByEmail(librarianPojo.getEmail());
-                Credential credential = credentialService.findByUserId(librarian.getId());
-                out.println(librarian.getId());
+                Credential credentialServiceByUserId = credentialService.findByUserId(librarianPojo.getId());
+                out.println(credentialServiceByUserId.getId());
                 out.println(librarianPojo.getId());
-                if (email.isPresent() && email.get().getId() == librarianPojo.getId()) {
+                if (email.isPresent() && credentialServiceByUserId.getUser().getId() == librarianPojo.getId()) {
                     librarian.setName(librarianPojo.getName());
                     librarian.setAddress(librarianPojo.getAddress());
                     librarian.setPhone(librarianPojo.getPhone());
                     librarian.setPosition(librarianPojo.getPosition());
                     librarians = librarianService.save(librarian);
-                    credential.setEmail(librarianPojo.getEmail());
+                    credentialServiceByUserId.setEmail(librarianPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
-                    credential.setPassword(encryptPassword);
-                    credentialService.save(credential);
+                    credentialServiceByUserId.setPassword(encryptPassword);
+                    credentialService.save(credentialServiceByUserId);
                 } else if (!email.isPresent()) {
                     librarian.setName(librarianPojo.getName());
                     librarian.setAddress(librarianPojo.getAddress());
                     librarian.setPhone(librarianPojo.getPhone());
                     librarian.setPosition(librarianPojo.getPosition());
                     librarians = librarianService.save(librarian);
-                    credential.setEmail(librarianPojo.getEmail());
+                    credentialServiceByUserId.setEmail(librarianPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
-                    credential.setPassword(encryptPassword);
-                    credentialService.save(credential);
+                    credentialServiceByUserId.setPassword(encryptPassword);
+                    credentialService.save(credentialServiceByUserId);
                 } else {
                     throw new EntityExistsException("Email already exists");
                 }
