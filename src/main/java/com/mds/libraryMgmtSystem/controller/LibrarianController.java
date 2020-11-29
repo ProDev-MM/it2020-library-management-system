@@ -136,7 +136,7 @@ public class LibrarianController {
                     librarian.setPhone(librarianPojo.getPhone());
                     librarian.setPosition(librarianPojo.getPosition());
                     librarians = librarianService.save(librarian);
-                    credentialServiceByUserId.setEmail(librarianPojo.getEmail());
+//                    credentialServiceByUserId.setEmail(librarianPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
                     credentialServiceByUserId.setPassword(encryptPassword);
                     credentialService.save(credentialServiceByUserId);

@@ -50,7 +50,7 @@ public class LibraryCardController {
         return new BaseResponse(GlobalConstant.success, libraryCard, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping(value = "/libraryCard")
+    @PostMapping(value = "/create/libraryCard")
     public BaseResponse createLibraryCard(@Validated @RequestBody LibraryCard libraryCard){
         try {
 
@@ -80,7 +80,7 @@ public class LibraryCardController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-    @PutMapping (value = "/libraryCard")
+    @PutMapping (value = "/update/libraryCard")
     public BaseResponse updateLibraryCard(@Validated @RequestBody LibraryCardPojo libraryCardPojo) {
         LibraryCard libraryCards;
         try{
@@ -91,11 +91,13 @@ public class LibraryCardController {
                     libraryCard.setName(libraryCardPojo.getName());
                     libraryCard.setRollNo(libraryCardPojo.getRollNo());
                     libraryCard.setYear(libraryCardPojo.getYear());
+                    libraryCard.setLogoUrl(libraryCardPojo.getLogoUrl());
                     libraryCards = libraryCardService.updateLibraryCard(libraryCard);
                 }else if(!libraryCardRollNo.isPresent()){
                     libraryCard.setName(libraryCardPojo.getName());
                     libraryCard.setRollNo(libraryCardPojo.getRollNo());
                     libraryCard.setYear(libraryCardPojo.getYear());
+                    libraryCard.setLogoUrl(libraryCardPojo.getLogoUrl());
                     libraryCards = libraryCardService.updateLibraryCard(libraryCard);
                 }else{
                     throw new EntityExistsException("Already roll no exists");

@@ -37,7 +37,7 @@ public class RentService {
     }
 
     public Rent addRent(RentPojo rentPojo) {
-
+        //service
         Optional<Book> book =bookRepository.findById(rentPojo.getBookId());
         if(!book.isPresent()){
             throw new EntityNotFoundException("Book not found");

@@ -87,7 +87,7 @@ public class RentController {
 
     }
 
-    @PutMapping (value = "/update/student")
+    @PutMapping (value = "/update/rent")
     public BaseResponse updateRent(@Validated @RequestBody RentPojo rentPojo) {
 
        Rent rents;
