@@ -64,12 +64,10 @@ public class StudentService {
     }
 
     public Student save(Student student) {
-
         return studentRepository.save(student);
     }
 
     public List<Student> searchStudent(String name) {
-        return studentRepository.bookSearch(name);
+        return studentRepository.findByName(name);
     }
-
 }

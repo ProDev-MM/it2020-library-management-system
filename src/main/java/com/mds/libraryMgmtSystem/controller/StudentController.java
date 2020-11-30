@@ -69,10 +69,11 @@ public class StudentController {
         credential.setPassword(null);
         return ResponseEntity.ok(credential);
     }
-
-    @GetMapping(value="/student/search")
+//
+    @GetMapping(value="/search/student")
     public BaseResponse searchStudent(String name){
         List<Student> student;
+
         try{
             student = studentService.searchStudent(name);
         }catch(Exception e) {
@@ -166,20 +167,20 @@ public class StudentController {
                     String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
                     credential.setPassword(encryptPassword);
                     credentialService.save(credential);
-                    throw new EntityNotFoundException("Email already exists");
+
                 } else if (!optionalCredential.isPresent()) {
                     student.setName(studentPojo.getName());
                     student.setAddress(studentPojo.getAddress());
                     student.setPhone(studentPojo.getPhone());
                     student.setDateOfBirth(studentPojo.getDateOfBirth());
                     student.setLibraryCard(libraryCard.get());
-                    studentService.save(student);
-//                    credential.setEmail(studentPojo.getEmail());
+                   students  = studentService.save(student);
+                    credential.setEmail(studentPojo.getEmail());
                     String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
                     credential.setPassword(encryptPassword);
                     credentialService.save(credential);
-                }else {
-
+                }else{
+                    throw new EntityExistsException("Email already exists");
                 }
             }else {
                 throw new EntityNotFoundException(studentPojo.getId() + "must be same");

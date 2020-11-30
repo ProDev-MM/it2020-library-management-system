@@ -2,6 +2,7 @@ package com.mds.libraryMgmtSystem.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
 
 @Entity
 @Table(name = "library_card")

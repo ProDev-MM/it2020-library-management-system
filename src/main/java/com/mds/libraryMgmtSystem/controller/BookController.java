@@ -76,8 +76,15 @@ public class BookController {
 
 
     @GetMapping(value="/book/search")
-    public List<Book> searchBook(String name,String author,String edition){
-        return bookService.bookSearch(name,author,edition);
+    public BaseResponse searchBook(String name,String author,String edition){
+        List<Book> book;
+        try {
+        book = bookService.bookSearch(name,author,edition);
+        }catch(Exception e) {
+            System.out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, book, GlobalConstant.Message.success_message);
     }
 
     @PostMapping(value = "/book")
