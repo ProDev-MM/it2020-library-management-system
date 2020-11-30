@@ -4,6 +4,8 @@ import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.repository.CategoryRepository;
 import com.mds.libraryMgmtSystem.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,8 +19,8 @@ public class CategoryService {
     @Autowired
     BookRepository bookRepository;
 
-    public List<Category> getCategory() {
-        return categoryRepository.findAll();
+    public Page<Category> getCategory(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
     public Category findById(Long id) {

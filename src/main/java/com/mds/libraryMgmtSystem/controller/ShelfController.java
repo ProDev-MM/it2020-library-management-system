@@ -6,6 +6,8 @@ import com.mds.libraryMgmtSystem.pojo.ShelfPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +22,10 @@ public class ShelfController {
     private ShelfService shelfService;
 
     @GetMapping(value = "/shelfs")
-    public BaseResponse getShelves(){
-        List<Shelf> shelf;
+    public BaseResponse getShelves(Pageable pageable){
+        Page<Shelf> shelf;
         try{
-            shelf= shelfService.getShelves();
+            shelf= shelfService.getShelves(pageable);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

@@ -3,17 +3,18 @@ package com.mds.libraryMgmtSystem.service;
 import com.mds.libraryMgmtSystem.entity.Shelf;
 import com.mds.libraryMgmtSystem.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ShelfService {
     @Autowired
     private ShelfRepository shelfRepository;
 
-    public List<Shelf> getShelves() {
-        return shelfRepository.findAll();
+    public Page<Shelf> getShelves(Pageable pageable) {
+        return shelfRepository.findAll(pageable);
     }
 
     public Shelf findById(Long id) {

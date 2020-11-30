@@ -6,11 +6,11 @@ import com.mds.libraryMgmtSystem.pojo.CredentialPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static java.lang.System.out;
 
@@ -24,10 +24,10 @@ public class CredentialController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/credentials")
-    public BaseResponse getCredential() {
-        List<Credential> credential;
+    public BaseResponse getCredential(Pageable pageable) {
+        Page <Credential> credential;
         try {
-            credential = credentialService.getCredential();
+            credential = credentialService.getCredential(pageable);
         } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

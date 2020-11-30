@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-//    @Query(value = "select s from Student s where s.rollNo = ?1")
+    @Query (value = "Select s from Student s where s.name like concat('%',concat(?1,'%'))")
+    List<Student> bookSearch(String name);
 }

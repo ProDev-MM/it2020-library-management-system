@@ -75,6 +75,11 @@ public class BookController {
     }
 
 
+    @GetMapping(value="/book/search")
+    public List<Book> searchBook(String name,String author,String edition){
+        return bookService.bookSearch(name,author,edition);
+    }
+
     @PostMapping(value = "/book")
     public BaseResponse createBook(@Validated @RequestBody Book book){
         try {
@@ -128,8 +133,4 @@ public class BookController {
 
     }
 
-    @GetMapping(value="/book/search")
-    public List<Book> searchBook(String name,String author,String edition){
-        return bookService.bookSearch(name,author,edition);
-    }
 }

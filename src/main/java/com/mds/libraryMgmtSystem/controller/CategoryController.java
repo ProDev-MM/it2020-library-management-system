@@ -7,6 +7,8 @@ import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +27,10 @@ public class CategoryController {
     private BookService bookService;
 
     @GetMapping(value = "/categories")
-    public BaseResponse getCategory(){
-        List<Category> category;
+    public BaseResponse getCategory(Pageable pageable){
+        Page<Category> category;
         try{
-            category= categoryService.getCategory();
+            category= categoryService.getCategory(pageable);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

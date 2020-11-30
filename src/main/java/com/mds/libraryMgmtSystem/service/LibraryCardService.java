@@ -3,9 +3,10 @@ package com.mds.libraryMgmtSystem.service;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,8 +14,8 @@ public class LibraryCardService {
     @Autowired
     private LibraryCardRepository libraryCardRepository;
 
-    public List<LibraryCard> getLibraryCard() {
-        return libraryCardRepository.findAll();
+    public Page<LibraryCard> getLibraryCard(Pageable pageable) {
+        return libraryCardRepository.findAll(pageable);
     }
 
     public LibraryCard findById(Long id) {
@@ -36,6 +37,5 @@ public class LibraryCardService {
     public Optional<LibraryCard> findByRollNo(String rollNo) {
         return libraryCardRepository.findByRollNo(rollNo);
     }
-
 
 }

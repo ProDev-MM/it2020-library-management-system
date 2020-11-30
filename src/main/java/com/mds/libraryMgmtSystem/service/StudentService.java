@@ -9,11 +9,14 @@ import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +31,8 @@ public class StudentService {
     @Autowired
     private LibraryCardService libraryCardService;
 
-    public List<Student> getStudent() {
-        return studentRepository.findAll();
+    public Page<Student> getStudent(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public Student findById(Long id) {
@@ -65,10 +68,8 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-
-
-//    public Optional<Credential> findByEmail(String email) {
-//        return credentialRepository.findByEmail(email);
-//    }
+    public List<Student> searchStudent(String name) {
+        return studentRepository.bookSearch(name);
+    }
 
 }

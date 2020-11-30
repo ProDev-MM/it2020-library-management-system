@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -21,4 +22,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query(value="select b.* from book b inner join shelf s on b.shelf_id = s.id where s.id = ?1", nativeQuery=true)
     List<Book> findByShelfId(Long id);
+
 }

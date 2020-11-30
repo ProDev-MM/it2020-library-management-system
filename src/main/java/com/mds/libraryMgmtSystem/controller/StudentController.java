@@ -1,9 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
-import com.mds.libraryMgmtSystem.entity.Credential;
-import com.mds.libraryMgmtSystem.entity.Librarian;
-import com.mds.libraryMgmtSystem.entity.LibraryCard;
-import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.entity.*;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
@@ -17,6 +14,8 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +50,10 @@ public class StudentController {
 
 
     @GetMapping(value = "/students")
-    public BaseResponse getStudent(){
-        List<Student> student;
+    public BaseResponse getStudent(Pageable pageable){
+        Page<Student> student;
         try{
-           student= studentService.getStudent();
+           student= studentService.getStudent(pageable);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -70,6 +70,19 @@ public class StudentController {
         return ResponseEntity.ok(credential);
     }
 
+    @GetMapping(value="/student/search")
+    public BaseResponse searchStudent(String name){
+        List<Student> student;
+        try{
+            student = studentService.searchStudent(name);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, student, GlobalConstant.Message.success_message);
+    }
+
+
     @GetMapping(value="/student/{id}")
     public BaseResponse getById(@PathVariable Long id){
         Student student;
@@ -80,6 +93,19 @@ public class StudentController {
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
         return new BaseResponse(GlobalConstant.success, student, GlobalConstant.Message.success_message);
+    }
+
+
+    @DeleteMapping(value="/student/{id}")
+    public BaseResponse deleteStudent(@PathVariable Long id){
+        try {
+            studentService.deleteStudent(id);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
+
     }
 
     @PostMapping("/create/student")
@@ -168,15 +194,4 @@ public class StudentController {
 
     }
 
-    @DeleteMapping(value="/student/{id}")
-    public BaseResponse deleteStudent(@PathVariable Long id){
-        try {
-            studentService.deleteStudent(id);
-        }catch(Exception e) {
-            out.println("Error occur "+e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-        }
-        return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
-
-    }
 }
