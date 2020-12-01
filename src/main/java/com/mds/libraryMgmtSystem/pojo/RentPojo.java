@@ -1,6 +1,8 @@
 package com.mds.libraryMgmtSystem.pojo;
 
 import com.mds.libraryMgmtSystem.entity.Rent;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -15,23 +17,23 @@ public class RentPojo {
     private Integer fine;
     private Rent.Status status;
 
-    @NotNull
-    private Long studentId;
-    @NotNull
-    private Long bookId;
-    @NotNull
-    private Long librarianId;
+    @NotEmpty
+    private String studentName;
+    @NotEmpty
+    private String bookName;
+    @NotEmpty
+    private String librarianName;
 
-    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, Integer fine, Rent.Status status, Long studentId, Long bookId, Long librarianId) {
+    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, Integer fine, Rent.Status status,String studentName, String bookName, String librarianName) {
         this.id = id;
         this.rentFromDate = rentFromDate;
         this.rentToDate = rentToDate;
         this.returnDate = returnDate;
         this.fine = fine;
         this.status = status;
-        this.studentId = studentId;
-        this.bookId = bookId;
-        this.librarianId = librarianId;
+        this.studentName = studentName;
+        this.bookName = bookName;
+        this.librarianName = librarianName;
     }
 
     public Long getId() {
@@ -82,27 +84,27 @@ public class RentPojo {
         this.status = status;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public Long getBookId() {
-        return bookId;
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
-    public Long getLibrarianId() {
-        return librarianId;
+    public String getLibrarianName() {
+        return librarianName;
     }
 
-    public void setLibrarianId(Long librarianId) {
-        this.librarianId = librarianId;
+    public void setLibrarianName(String librarianName) {
+        this.librarianName = librarianName;
     }
 }
