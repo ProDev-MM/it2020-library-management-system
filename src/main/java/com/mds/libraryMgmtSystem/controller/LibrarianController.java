@@ -86,11 +86,11 @@ public class LibrarianController {
                 librarianPojo.setPassword(encriptedPassword);
                 librarians = librarianService.addLibrarian(librarianPojo);
             }else {
-                out.println("Exists");
+                throw new EntityExistsException("Already email exists");
             }
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+            return new BaseResponse(GlobalConstant.fail, null,e.getMessage());
         }
 
         return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
@@ -121,6 +121,7 @@ public class LibrarianController {
                 out.println(credentialServiceByUserId.getId());
                 out.println(librarianPojo.getId());
                 if (email.isPresent() && credentialServiceByUserId.getUser().getId() == librarianPojo.getId()) {
+                    out.println("Already Email Exists !");
                     librarian.setName(librarianPojo.getName());
                     librarian.setAddress(librarianPojo.getAddress());
                     librarian.setPhone(librarianPojo.getPhone());
@@ -140,11 +141,9 @@ public class LibrarianController {
                     String encryptPassword = passwordEncoder.encode(librarianPojo.getPassword());
                     credentialServiceByUserId.setPassword(encryptPassword);
                     credentialService.save(credentialServiceByUserId);
-                } else {
-                    throw new EntityExistsException("Email already exists");
                 }
             }else {
-                throw new EntityNotFoundException(librarianPojo.getId() + "Id exists");
+                throw new EntityNotFoundException(librarianPojo.getId() + "Id Not Found! ");
             }
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());

@@ -16,6 +16,7 @@ public class CredentialService {
     public Page<Credential> getCredential(Pageable pageable) {
         return credentialRepository.findAll(pageable);
     }
+
     public void deleteCredential(Long id) {
         credentialRepository.deleteById(id);
     }
@@ -32,4 +33,5 @@ public class CredentialService {
     public Credential findByUserId(Long id) {
         return credentialRepository.findByUserId(id);
     }
+
 }

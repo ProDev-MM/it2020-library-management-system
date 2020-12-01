@@ -6,6 +6,9 @@ import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.entity.Rent;
 import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.RentPojo;
+import com.mds.libraryMgmtSystem.repository.BookRepository;
+import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
+import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
 import com.mds.libraryMgmtSystem.service.LibrarianService;
@@ -35,6 +38,15 @@ public class RentController {
 
     @Autowired
     private LibrarianService librarianService;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private LibrarianRepository librarianRepository;
 
     @GetMapping(value = "/rents")
     public BaseResponse getRent(){
@@ -92,15 +104,15 @@ public class RentController {
 
        Rent rents;
         try{
-            Optional<Book> book = Optional.ofNullable(bookService.findById(rentPojo.getBookId()));
+            Optional<Book> book =bookRepository.findByName(rentPojo.getBookName());
             if(!book.isPresent()){
                 throw new EntityNotFoundException("Book not found");
             }
-            Optional<Student> student = Optional.ofNullable(studentService.findById(rentPojo.getStudentId()));
+            Optional<Student> student =studentRepository.findByStudentName(rentPojo.getStudentName());
             if(!student.isPresent()){
                 throw new EntityNotFoundException("Student not found");
             }
-            Optional<Librarian> librarian = Optional.ofNullable(librarianService.findById(rentPojo.getLibrarianId()));
+            Optional<Librarian> librarian =librarianRepository.findByName(rentPojo.getLibrarianName());
             if(!librarian.isPresent()){
                 throw new EntityNotFoundException("Librarian not found");
             }

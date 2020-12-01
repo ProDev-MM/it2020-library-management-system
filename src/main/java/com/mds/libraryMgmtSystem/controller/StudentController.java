@@ -149,7 +149,7 @@ public class StudentController {
                 Student student = studentService.findById(studentPojo.getId());
                 Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
                 if (!libraryCard.isPresent()) {
-                    throw new EntityNotFoundException("LibraryCardId Not Found");
+                    throw new EntityNotFoundException("LibraryCard Not Found");
                 }
                 Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
                 Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
@@ -157,6 +157,7 @@ public class StudentController {
                 out.println(credential.getUser().getId());
                 out.println(studentPojo.getId());
                 if (optionalCredential.isPresent() && credential.getUser().getId() == studentPojo.getId()) {
+                    out.println("Already Email Exists !");
                     student.setName(studentPojo.getName());
                     student.setAddress(studentPojo.getAddress());
                     student.setPhone(studentPojo.getPhone());
@@ -179,11 +180,9 @@ public class StudentController {
                     String encryptPassword = passwordEncoder.encode(studentPojo.getPassword());
                     credential.setPassword(encryptPassword);
                     credentialService.save(credential);
-                }else{
-                    throw new EntityExistsException("Email already exists");
                 }
             }else {
-                throw new EntityNotFoundException(studentPojo.getId() + "must be same");
+                throw new EntityNotFoundException(studentPojo.getId() + " Id Not Found !");
             }
 
         }catch(Exception e) {

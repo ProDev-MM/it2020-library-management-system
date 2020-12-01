@@ -21,7 +21,6 @@ public class Rent {
     private LocalDate rentToDate;
 
     @Column
-    @NotNull
     private LocalDate returnDate;
 
     @Column
@@ -39,7 +38,7 @@ public class Rent {
     private Student student;
 
     @OneToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn
     private Book book;
 
     @OneToOne

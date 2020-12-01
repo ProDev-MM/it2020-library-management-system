@@ -23,4 +23,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value="select b.* from book b inner join shelf s on b.shelf_id = s.id where s.id = ?1", nativeQuery=true)
     List<Book> findByShelfId(Long id);
 
+    @Query (value="select b from Book b where b.name= ?1")
+    Optional<Book> findByName(String bookName);
 }
