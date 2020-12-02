@@ -7,14 +7,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ShelfService {
     @Autowired
     private ShelfRepository shelfRepository;
 
-    public Page<Shelf> getShelves(Pageable pageable) {
-        return shelfRepository.findAll(pageable);
+    public List<Shelf> getShelves() {
+        return shelfRepository.findAll();
     }
 
     public Shelf findById(Long id) {

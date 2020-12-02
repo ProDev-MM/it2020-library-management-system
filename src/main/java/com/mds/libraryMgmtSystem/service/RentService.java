@@ -36,44 +36,17 @@ public class RentService {
         return rentRepository.findById(id).orElse(null);
     }
 
-//    public Rent addRent(RentPojo rentPojo) {
-//        //service
-//        Optional<Book> book =bookRepository.findById(rentPojo.getBookId());
-//        if(!book.isPresent()){
-//            throw new EntityNotFoundException("Book not found");
-//        }
-//        Optional<Student> student =studentRepository.findById(rentPojo.getStudentId());
-//        if(!student.isPresent()){
-//           throw new EntityNotFoundException("Student not found");
-//        }
-//        Optional<Librarian> librarian =librarianRepository.findById(rentPojo.getLibrarianId());
-//        if(!librarian.isPresent()){
-//           throw new EntityNotFoundException("Librarian not found");
-//        }
-//
-//        Rent rent = new Rent();
-//
-//        rent.setRentFromDate(rentPojo.getRentFromDate());
-//        rent.setRentToDate(rentPojo.getRentToDate());
-//        rent.setReturnDate(rentPojo.getReturnDate());
-//        rent.setFine(rentPojo.getFine());
-//        rent.setStatus(rentPojo.getStatus());
-//        rent.setStudent(student.get());
-//        rent.setBook(book.get());
-//        rent.setLibrarian(librarian.get());
-//        return rentRepository.save(rent);
-//    }
 
     public Rent addRent(RentPojo rentPojo) {
-        Optional<Book> book =bookRepository.findByName(rentPojo.getBookName());
+        Optional<Book> book =bookRepository.findByName(rentPojo.getBook());
         if(!book.isPresent()){
             throw new EntityNotFoundException("Book not found");
         }
-        Optional<Student> student =studentRepository.findByStudentName(rentPojo.getStudentName());
+        Optional<Student> student =studentRepository.findByStudentName(rentPojo.getStudent());
         if(!student.isPresent()){
             throw new EntityNotFoundException("Student not found");
         }
-        Optional<Librarian> librarian =librarianRepository.findByName(rentPojo.getLibrarianName());
+        Optional<Librarian> librarian =librarianRepository.findByName(rentPojo.getLibrarian());
         if(!librarian.isPresent()){
             throw new EntityNotFoundException("Librarian not found");
         }

@@ -31,8 +31,8 @@ public class StudentService {
     @Autowired
     private LibraryCardService libraryCardService;
 
-    public Page<Student> getStudent(Pageable pageable) {
-        return studentRepository.findAll(pageable);
+    public List<Student> getStudent() {
+        return studentRepository.findAll();
     }
 
     public Student findById(Long id) {
@@ -40,7 +40,7 @@ public class StudentService {
     }
 
     public Student addStudent(StudentPojo studentPojo) {
-        Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+        Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCard());
 
         Student student = new Student();
         student.setName(studentPojo.getName());

@@ -27,10 +27,10 @@ public class CategoryController {
     private BookService bookService;
 
     @GetMapping(value = "/categories")
-    public BaseResponse getCategory(Pageable pageable){
-        Page<Category> category;
+    public BaseResponse getCategory( ){
+        List<Category> category;
         try{
-            category= categoryService.getCategory(pageable);
+            category= categoryService.getCategory();
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -74,7 +74,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping (value = "/category")
+    @PutMapping (value = "/update/category")
     public BaseResponse updateCategory(@Validated @RequestBody CategoryPojo categoryPojo) {
         Category categories;
 

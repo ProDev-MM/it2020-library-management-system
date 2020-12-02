@@ -19,8 +19,8 @@ public class CategoryService {
     @Autowired
     BookRepository bookRepository;
 
-    public Page<Category> getCategory(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+    public List<Category> getCategory() {
+        return categoryRepository.findAll();
     }
 
     public Category findById(Long id) {

@@ -17,7 +17,7 @@ public class Rent {
     private LocalDate rentFromDate;
 
     @Column
-    @NotNull
+//    @NotNull
     private LocalDate rentToDate;
 
     @Column

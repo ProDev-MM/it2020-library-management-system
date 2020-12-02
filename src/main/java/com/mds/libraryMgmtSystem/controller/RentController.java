@@ -31,15 +31,6 @@ public class RentController {
     private RentService rentService;
 
     @Autowired
-    private BookService bookService;
-
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private LibrarianService librarianService;
-
-    @Autowired
     private BookRepository bookRepository;
 
     @Autowired
@@ -104,15 +95,15 @@ public class RentController {
 
        Rent rents;
         try{
-            Optional<Book> book =bookRepository.findByName(rentPojo.getBookName());
+            Optional<Book> book = bookRepository.findByName(rentPojo.getBook());
             if(!book.isPresent()){
                 throw new EntityNotFoundException("Book not found");
             }
-            Optional<Student> student =studentRepository.findByStudentName(rentPojo.getStudentName());
+            Optional<Student> student = studentRepository.findByStudentName(rentPojo.getStudent());
             if(!student.isPresent()){
                 throw new EntityNotFoundException("Student not found");
             }
-            Optional<Librarian> librarian =librarianRepository.findByName(rentPojo.getLibrarianName());
+            Optional<Librarian> librarian = librarianRepository.findByName(rentPojo.getLibrarian());
             if(!librarian.isPresent()){
                 throw new EntityNotFoundException("Librarian not found");
             }

@@ -21,7 +21,8 @@ public class StudentPojo {
     @NotEmpty
     private String role;
     @NotEmpty
-    private String libraryCardRollNo;
+    private String libraryCard;
+//    private String libraryCardRollNo;
 
     public StudentPojo() {
 
@@ -91,13 +92,21 @@ public class StudentPojo {
         this.role = role;
     }
 
-    public String getLibraryCardRollNo() {
-        return libraryCardRollNo;
+    public String getLibraryCard() {
+        return libraryCard;
     }
 
-    public void setLibraryCardRollNo(String libraryCardRollNo) {
-        this.libraryCardRollNo = libraryCardRollNo;
+    public void setLibraryCard(String libraryCard) {
+        this.libraryCard = libraryCard;
     }
+
+    //    public String getLibraryCardRollNo() {
+//        return libraryCardRollNo;
+//    }
+//
+//    public void setLibraryCardRollNo(String libraryCardRollNo) {
+//        this.libraryCardRollNo = libraryCardRollNo;
+//    }
 
 }
 

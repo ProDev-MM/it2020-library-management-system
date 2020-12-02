@@ -1,11 +1,9 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.entity.*;
-import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
-import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
+
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
-import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
 import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import com.mds.libraryMgmtSystem.service.CredentialService;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
@@ -14,17 +12,13 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +44,10 @@ public class StudentController {
 
 
     @GetMapping(value = "/students")
-    public BaseResponse getStudent(Pageable pageable){
-        Page<Student> student;
+    public BaseResponse getStudent(){
+        List<Student> student;
         try{
-           student= studentService.getStudent(pageable);
+           student= studentService.getStudent();
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -115,7 +109,7 @@ public class StudentController {
 
         try {
             Optional<Credential> email = credentialRepository.findByEmail(studentPojo.getEmail());
-            Optional<LibraryCard> optionalLibraryCardRollNo = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+            Optional<LibraryCard> optionalLibraryCardRollNo = libraryCardService.findByRollNo(studentPojo.getLibraryCard());
             if(!optionalLibraryCardRollNo.isPresent()){
                 throw new EntityNotFoundException("LibraryCard's RollNo Not Found");
             }
@@ -147,11 +141,11 @@ public class StudentController {
         try{
             if (this.studentRepository.existsById(studentPojo.getId())) {
                 Student student = studentService.findById(studentPojo.getId());
-                Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+                Optional<LibraryCard> libraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCard());
                 if (!libraryCard.isPresent()) {
                     throw new EntityNotFoundException("LibraryCard Not Found");
                 }
-                Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCardRollNo());
+                Optional<LibraryCard> optionalLibraryCard = libraryCardService.findByRollNo(studentPojo.getLibraryCard());
                 Optional<Credential> optionalCredential = credentialRepository.findByEmail(studentPojo.getEmail());
                 Credential credential = credentialService.findByUserId(studentPojo.getId());
                 out.println(credential.getUser().getId());

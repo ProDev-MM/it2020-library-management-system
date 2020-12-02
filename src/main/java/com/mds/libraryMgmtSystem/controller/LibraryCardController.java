@@ -29,10 +29,10 @@ public class LibraryCardController {
     private LibraryCardRepository libraryCardRepository;
 
     @GetMapping(value = "/libraryCards")
-    public BaseResponse getLibraryCard(Pageable pageable){
-        Page<LibraryCard> libraryCard;
+    public BaseResponse getLibraryCard(){
+        List<LibraryCard> libraryCard;
         try{
-            libraryCard= libraryCardService.getLibraryCard(pageable);
+            libraryCard= libraryCardService.getLibraryCard();
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

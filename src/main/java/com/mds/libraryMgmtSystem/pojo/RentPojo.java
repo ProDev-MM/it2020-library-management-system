@@ -18,22 +18,14 @@ public class RentPojo {
     private Rent.Status status;
 
     @NotEmpty
-    private String studentName;
+    private String student;
     @NotEmpty
-    private String bookName;
+    private String book;
     @NotEmpty
-    private String librarianName;
+    private String librarian;
 
-    public RentPojo(Long id, LocalDate rentFromDate, LocalDate rentToDate, LocalDate returnDate, Integer fine, Rent.Status status,String studentName, String bookName, String librarianName) {
-        this.id = id;
-        this.rentFromDate = rentFromDate;
-        this.rentToDate = rentToDate;
-        this.returnDate = returnDate;
-        this.fine = fine;
-        this.status = status;
-        this.studentName = studentName;
-        this.bookName = bookName;
-        this.librarianName = librarianName;
+    public RentPojo() {
+
     }
 
     public Long getId() {
@@ -84,27 +76,27 @@ public class RentPojo {
         this.status = status;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getStudent() {
+        return student;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setStudent(String student) {
+        this.student = student;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getBook() {
+        return book;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBook(String book) {
+        this.book = book;
     }
 
-    public String getLibrarianName() {
-        return librarianName;
+    public String getLibrarian() {
+        return librarian;
     }
 
-    public void setLibrarianName(String librarianName) {
-        this.librarianName = librarianName;
+    public void setLibrarian(String librarian) {
+        this.librarian = librarian;
     }
 }

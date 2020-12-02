@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,8 +15,8 @@ public class LibraryCardService {
     @Autowired
     private LibraryCardRepository libraryCardRepository;
 
-    public Page<LibraryCard> getLibraryCard(Pageable pageable) {
-        return libraryCardRepository.findAll(pageable);
+    public List<LibraryCard> getLibraryCard() {
+        return libraryCardRepository.findAll();
     }
 
     public LibraryCard findById(Long id) {
