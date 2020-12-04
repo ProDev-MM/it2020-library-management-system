@@ -7,14 +7,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CredentialService {
     @Autowired
     private CredentialRepository credentialRepository;
 
-    public Page<Credential> getCredential(Pageable pageable) {
-        return credentialRepository.findAll(pageable);
+    public List<Credential> getCredential() {
+        return credentialRepository.findAll();
     }
 
     public void deleteCredential(Long id) {
@@ -29,9 +31,11 @@ public class CredentialService {
         return credentialRepository.save(credential);
     }
 
-
     public Credential findByUserId(Long id) {
         return credentialRepository.findByUserId(id);
     }
 
+    public List<Credential> findByCredentialUserId(Long id) {
+        return credentialRepository.findByCredentialUserId(id);
+    }
 }

@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static java.lang.System.out;
 
 @RestController
@@ -24,10 +26,10 @@ public class CredentialController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/credentials")
-    public BaseResponse getCredential(Pageable pageable) {
-        Page <Credential> credential;
+    public BaseResponse getCredential() {
+        List<Credential> credential;
         try {
-            credential = credentialService.getCredential(pageable);
+            credential = credentialService.getCredential();
         } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -40,6 +42,18 @@ public class CredentialController {
         Credential credential;
         try {
             credential = credentialService.findById(id);
+        } catch (Exception e) {
+            out.println("Error occur " + e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, credential, GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value = "/findByCredentialUserId/{id}")
+    public BaseResponse getByUserId(@PathVariable Long id) {
+        List<Credential> credential;
+        try {
+              credential =credentialService.findByCredentialUserId(id);
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
