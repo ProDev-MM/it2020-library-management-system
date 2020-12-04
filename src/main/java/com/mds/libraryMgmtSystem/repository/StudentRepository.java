@@ -1,5 +1,6 @@
 package com.mds.libraryMgmtSystem.repository;
 
+import com.mds.libraryMgmtSystem.entity.Rent;
 import com.mds.libraryMgmtSystem.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query (value="select s from Student s where s.name= ?1")
     Optional<Student> findByStudentName(String studentName);
+
 }

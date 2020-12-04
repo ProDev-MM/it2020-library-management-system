@@ -1,10 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
-import com.mds.libraryMgmtSystem.entity.Book;
-import com.mds.libraryMgmtSystem.entity.Librarian;
-import com.mds.libraryMgmtSystem.entity.Rent;
-import com.mds.libraryMgmtSystem.entity.Student;
+import com.mds.libraryMgmtSystem.entity.*;
 import com.mds.libraryMgmtSystem.pojo.RentPojo;
 import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
@@ -38,6 +35,9 @@ public class RentController {
 
     @Autowired
     private LibrarianRepository librarianRepository;
+
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping(value = "/rents")
     public BaseResponse getRent(){
@@ -76,6 +76,19 @@ public class RentController {
         }
 
         return new BaseResponse(GlobalConstant.success, rent,GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value="/search/rent")
+    public BaseResponse searchRent(String studentName){
+        List<Rent> rent;
+
+        try{
+            rent = rentService.findRentByStudentName(studentName);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, rent, GlobalConstant.Message.success_message);
     }
 
     @DeleteMapping(value="/rent/{id}")

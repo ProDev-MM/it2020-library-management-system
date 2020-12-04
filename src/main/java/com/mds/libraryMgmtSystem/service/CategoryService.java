@@ -42,5 +42,9 @@ public class CategoryService {
     public Collection<Category> saveAll(Collection<Category> categories) {
         return categoryRepository.saveAll(categories);
     }
+
+    public List<Category> searchCategory(String type) {
+        return categoryRepository.findByType(type);
+    }
 }
 

@@ -15,4 +15,6 @@ public interface LibrarianRepository extends JpaRepository<Librarian, Long> {
     @Query("select l from Librarian l where l.name = ?1")
     Optional<Librarian> findByName(String librarianName);
 
+    @Query (value = "Select l from Librarian l where l.name like concat('%',concat(?1,'%'))")
+    List<Librarian> findByLibrarianName(String name);
 }

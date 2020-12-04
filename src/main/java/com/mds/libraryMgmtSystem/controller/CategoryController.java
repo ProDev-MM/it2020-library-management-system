@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.entity.Category;
+import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.pojo.CategoryPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
@@ -45,6 +46,19 @@ public class CategoryController {
             category = categoryService.findById(id);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, category, GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value="/search/category")
+    public BaseResponse searchCategory(String type){
+        List<Category> category;
+
+        try{
+            category = categoryService.searchCategory(type);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
         return new BaseResponse(GlobalConstant.success, category, GlobalConstant.Message.success_message);

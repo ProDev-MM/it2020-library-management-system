@@ -72,5 +72,8 @@ public class LibrarianService {
         return librarianRepository.findById(id);
     }
 
+    public List<Librarian> searchLibrarian(String name) {
+        return librarianRepository.findByLibrarianName(name);
+    }
 }
 

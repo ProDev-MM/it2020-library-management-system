@@ -63,7 +63,7 @@ public class StudentController {
         credential.setPassword(null);
         return ResponseEntity.ok(credential);
     }
-//
+
     @GetMapping(value="/search/student")
     public BaseResponse searchStudent(String name){
         List<Student> student;

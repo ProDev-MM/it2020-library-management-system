@@ -73,4 +73,8 @@ public class RentService {
     public void deleteRent(Long id) {
         rentRepository.deleteById(id);
     }
+
+    public List<Rent> findRentByStudentName(String name) {
+        return rentRepository.findByStudentName(name);
+    }
 }

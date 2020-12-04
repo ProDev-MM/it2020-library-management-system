@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
+import com.mds.libraryMgmtSystem.entity.Category;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
 import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
@@ -45,6 +46,19 @@ public class LibraryCardController {
         LibraryCard libraryCard;
         try{
             libraryCard = libraryCardService.findById(id);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, libraryCard, GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value="/search/libraryCard")
+    public BaseResponse searchLibraryCard(String rollNo){
+        List<LibraryCard> libraryCard;
+
+        try{
+            libraryCard = libraryCardService.searchLibraryCard(rollNo);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

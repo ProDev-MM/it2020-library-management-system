@@ -3,6 +3,7 @@ package com.mds.libraryMgmtSystem.controller;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
+import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
@@ -75,6 +76,19 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
     }
 
+    @GetMapping(value="/search/librarian")
+    public BaseResponse searchLibrarian(String name){
+        List<Librarian> librarian;
+
+        try{
+            librarian = librarianService.searchLibrarian(name);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, librarian, GlobalConstant.Message.success_message);
+    }
+
     @PostMapping("/create/Librarian")
     public BaseResponse createLibrarian(@Validated @RequestBody LibrarianPojo librarianPojo) {
         Librarian librarians = null;
@@ -96,7 +110,6 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, librarians, GlobalConstant.Message.success_message);
     }
 
-
     @DeleteMapping(value = "/librarian/{id}")
     public BaseResponse deleteLibrarian(@PathVariable Long id) {
         try {
@@ -108,7 +121,6 @@ public class LibrarianController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
-
 
     @PutMapping(value = "/update/librarian")
     public BaseResponse updateLibrarian(@Validated @RequestBody LibrarianPojo librarianPojo) {
