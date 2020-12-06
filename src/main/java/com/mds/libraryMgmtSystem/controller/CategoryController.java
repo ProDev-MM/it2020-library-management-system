@@ -1,7 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.entity.Category;
-import com.mds.libraryMgmtSystem.entity.Librarian;
 import com.mds.libraryMgmtSystem.pojo.CategoryPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.BookService;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -28,10 +26,10 @@ public class CategoryController {
     private BookService bookService;
 
     @GetMapping(value = "/categories")
-    public BaseResponse getCategory( ){
-        List<Category> category;
+    public BaseResponse getCategory(Pageable pageable){
+        Page<Category> category;
         try{
-            category= categoryService.getCategory();
+            category= categoryService.getCategory(pageable);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

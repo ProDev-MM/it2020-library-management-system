@@ -12,6 +12,8 @@ import com.mds.libraryMgmtSystem.service.LibrarianService;
 import com.mds.libraryMgmtSystem.service.RentService;
 import com.mds.libraryMgmtSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +42,10 @@ public class RentController {
     private StudentService studentService;
 
     @GetMapping(value = "/rents")
-    public BaseResponse getRent(){
-        List<Rent> rent;
+    public BaseResponse getRent(Pageable pageable){
+        Page<Rent> rent;
         try{
-            rent= rentService.getRent();
+            rent= rentService.getRent(pageable);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

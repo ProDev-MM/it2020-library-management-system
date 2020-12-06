@@ -3,6 +3,8 @@ package com.mds.libraryMgmtSystem.service;
 import com.mds.libraryMgmtSystem.entity.OQ;
 import com.mds.libraryMgmtSystem.repository.OQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class OQService {
     private OQRepository oqRepository;
 
 
-    public List<OQ> getOQ() {
-        return oqRepository.findAll();
+    public Page<OQ> getOQ(Pageable pageable) {
+        return oqRepository.findAll(pageable);
     }
 
     public OQ findById(Long id) {

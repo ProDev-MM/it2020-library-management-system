@@ -26,10 +26,10 @@ public class CredentialController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/credentials")
-    public BaseResponse getCredential() {
-        List<Credential> credential;
+    public BaseResponse getCredential(Pageable pageable) {
+        Page<Credential> credential;
         try {
-            credential = credentialService.getCredential();
+            credential = credentialService.getCredential(pageable);
         } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

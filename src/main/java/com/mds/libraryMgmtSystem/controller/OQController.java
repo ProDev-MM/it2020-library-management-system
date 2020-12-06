@@ -6,6 +6,8 @@ import com.mds.libraryMgmtSystem.pojo.OQPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.OQService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +20,10 @@ public class OQController {
     private OQService oqService;
 
     @GetMapping(value = "/oqs")
-    public BaseResponse getOQ() {
-        List<OQ> oq;
+    public BaseResponse getOQ(Pageable pageable) {
+        Page<OQ> oq;
         try {
-            oq = oqService.getOQ();
+            oq = oqService.getOQ(pageable);
         } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

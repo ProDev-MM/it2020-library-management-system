@@ -18,16 +18,8 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> getBook(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-
-        Page<Book> pagedResult = bookRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Book>();
-        }
+    public Page<Book> getBook(Pageable pageable) {
+       return bookRepository.findAll(pageable);
     }
 
     public Book findById(Long id) {

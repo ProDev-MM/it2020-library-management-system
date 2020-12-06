@@ -8,6 +8,8 @@ import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.pojo.BookPojo;
 import com.mds.libraryMgmtSystem.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +26,10 @@ public class BookController {
     private CategoryService categoryService;
 
     @GetMapping(value = "/books")
-    public BaseResponse getBook( @RequestParam(defaultValue = "0") Integer pageNo,
-                                 @RequestParam(defaultValue = "10") Integer pageSize,
-                                 @RequestParam(defaultValue = "id") String sortBy){
-        List<Book> book;
+    public BaseResponse getBook(Pageable pageable){
+        Page<Book> book;
         try{
-            book= bookService.getBook(pageNo, pageSize, sortBy);
+            book= bookService.getBook(pageable);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

@@ -6,15 +6,14 @@ import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.System.out;
 
 @Service
 public class LibrarianService {
@@ -34,8 +33,8 @@ public class LibrarianService {
     @Autowired
     private CredentialService credentialService;
 
-    public List<Librarian> getLibrarian() {
-        return librarianRepository.findAll();
+    public Page<Librarian> getLibrarian(Pageable pageable) {
+        return librarianRepository.findAll(pageable);
     }
 
     public Librarian findById(Long id) {

@@ -15,8 +15,8 @@ public class CredentialService {
     @Autowired
     private CredentialRepository credentialRepository;
 
-    public List<Credential> getCredential() {
-        return credentialRepository.findAll();
+    public Page<Credential> getCredential(Pageable pageable) {
+        return credentialRepository.findAll(pageable);
     }
 
     public void deleteCredential(Long id) {

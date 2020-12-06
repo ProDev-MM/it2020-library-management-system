@@ -15,8 +15,8 @@ public class ShelfService {
     @Autowired
     private ShelfRepository shelfRepository;
 
-    public List<Shelf> getShelves() {
-        return shelfRepository.findAll();
+    public Page<Shelf> getShelves(Pageable pageable) {
+        return shelfRepository.findAll(pageable);
     }
 
     public Shelf findById(Long id) {

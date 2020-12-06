@@ -28,8 +28,8 @@ public class StudentService {
     @Autowired
     private LibraryCardService libraryCardService;
 
-    public List<Student> getStudent() {
-        return studentRepository.findAll();
+    public Page<Student> getStudent(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public Student findById(Long id) {

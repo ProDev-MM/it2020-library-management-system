@@ -3,7 +3,6 @@ package com.mds.libraryMgmtSystem.controller;
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.Librarian;
-import com.mds.libraryMgmtSystem.entity.Student;
 import com.mds.libraryMgmtSystem.pojo.LibrarianPojo;
 import com.mds.libraryMgmtSystem.pojo.UserDetailInfo;
 import com.mds.libraryMgmtSystem.repository.CredentialRepository;
@@ -12,6 +11,8 @@ import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.CredentialService;
 import com.mds.libraryMgmtSystem.service.LibrarianService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,10 +46,10 @@ public class LibrarianController {
     private CredentialService credentialService;
 
     @GetMapping(value = "/librarians")
-    public BaseResponse getLibrarian() {
-        List<Librarian> librarian;
+    public BaseResponse getLibrarian(Pageable pageable) {
+        Page<Librarian> librarian;
         try {
-            librarian = librarianService.getLibrarian();
+            librarian = librarianService.getLibrarian(pageable);
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

@@ -10,6 +10,8 @@ import com.mds.libraryMgmtSystem.repository.LibrarianRepository;
 import com.mds.libraryMgmtSystem.repository.RentRepository;
 import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -28,8 +30,8 @@ public class RentService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Rent> getRent() {
-        return rentRepository.findAll();
+    public Page<Rent> getRent(Pageable pageable) {
+        return rentRepository.findAll(pageable);
     }
 
     public Rent findById(Long id) {

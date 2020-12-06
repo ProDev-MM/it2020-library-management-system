@@ -12,6 +12,8 @@ import com.mds.libraryMgmtSystem.constant.GlobalConstant;
 import com.mds.libraryMgmtSystem.pojo.StudentPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 @RestController
 @CrossOrigin
@@ -44,10 +45,10 @@ public class StudentController {
 
 
     @GetMapping(value = "/students")
-    public BaseResponse getStudent(){
-        List<Student> student;
+    public BaseResponse getStudent(Pageable pageable){
+        Page<Student> student;
         try{
-           student= studentService.getStudent();
+           student= studentService.getStudent(pageable);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
