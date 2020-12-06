@@ -1,7 +1,6 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
-import com.mds.libraryMgmtSystem.entity.Category;
 import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.pojo.LibraryCardPojo;
 import com.mds.libraryMgmtSystem.repository.LibraryCardRepository;
@@ -30,10 +29,10 @@ public class LibraryCardController {
     private LibraryCardRepository libraryCardRepository;
 
     @GetMapping(value = "/libraryCards")
-    public BaseResponse getLibraryCard(){
-        List<LibraryCard> libraryCard;
+    public BaseResponse getLibraryCard(Pageable pageable){
+        Page<LibraryCard> libraryCard;
         try{
-            libraryCard= libraryCardService.getLibraryCard();
+            libraryCard= libraryCardService.getLibraryCard(pageable);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

@@ -15,8 +15,8 @@ public class LibraryCardService {
     @Autowired
     private LibraryCardRepository libraryCardRepository;
 
-    public List<LibraryCard> getLibraryCard() {
-        return libraryCardRepository.findAll();
+    public Page<LibraryCard> getLibraryCard(Pageable pageable) {
+        return libraryCardRepository.findAll(pageable);
     }
 
     public LibraryCard findById(Long id) {
