@@ -7,6 +7,7 @@ import com.mds.libraryMgmtSystem.repository.CredentialRepository;
 import com.mds.libraryMgmtSystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +29,6 @@ public class StudentService {
 
     @Autowired
     private LibraryCardService libraryCardService;
-
-    public Page<Student> getStudent(Pageable pageable) {
-        return studentRepository.findAll(pageable);
-    }
 
     public Student findById(Long id) {
         return studentRepository.findById(id).orElse(null);
@@ -69,4 +67,15 @@ public class StudentService {
     }
 
 
+    public List<Student> getStudent(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        Page<Student> pagedResult = studentRepository.findAll(paging);
+
+        if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Student>();
+        }
+    }
 }

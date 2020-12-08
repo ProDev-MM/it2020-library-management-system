@@ -22,10 +22,11 @@ public class ShelfController {
     private ShelfService shelfService;
 
     @GetMapping(value = "/shelfs")
-    public BaseResponse getShelves(Pageable pageable){
-        Page<Shelf> shelf;
+    public BaseResponse getShelves(@RequestParam(defaultValue = "0") Integer pageNo,
+                                   @RequestParam(defaultValue = "3000") Integer pageSize){
+        List<Shelf> shelf;
         try{
-            shelf= shelfService.getShelves(pageable);
+            shelf= shelfService.getShelves(pageNo, pageSize);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

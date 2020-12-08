@@ -45,10 +45,11 @@ public class StudentController {
 
 
     @GetMapping(value = "/students")
-    public BaseResponse getStudent(Pageable pageable){
-        Page<Student> student;
+    public BaseResponse getStudent(@RequestParam(defaultValue = "0") Integer pageNo,
+                                   @RequestParam(defaultValue = "10000") Integer pageSize){
+        List<Student> student;
         try{
-           student= studentService.getStudent(pageable);
+           student= studentService.getStudent(pageNo, pageSize);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

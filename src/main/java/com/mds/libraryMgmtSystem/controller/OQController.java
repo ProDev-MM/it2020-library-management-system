@@ -20,10 +20,11 @@ public class OQController {
     private OQService oqService;
 
     @GetMapping(value = "/oqs")
-    public BaseResponse getOQ(Pageable pageable) {
-        Page<OQ> oq;
+    public BaseResponse getOQ(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "3000") Integer pageSize) {
+        List<OQ> oq;
         try {
-            oq = oqService.getOQ(pageable);
+            oq = oqService.getOQ(pageNo, pageSize);
         } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

@@ -46,10 +46,11 @@ public class LibrarianController {
     private CredentialService credentialService;
 
     @GetMapping(value = "/librarians")
-    public BaseResponse getLibrarian(Pageable pageable) {
-        Page<Librarian> librarian;
+    public BaseResponse getLibrarian(@RequestParam(defaultValue = "0") Integer pageNo,
+                                     @RequestParam(defaultValue = "100") Integer pageSize) {
+        List<Librarian> librarian;
         try {
-            librarian = librarianService.getLibrarian(pageable);
+            librarian = librarianService.getLibrarian(pageNo, pageSize);
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

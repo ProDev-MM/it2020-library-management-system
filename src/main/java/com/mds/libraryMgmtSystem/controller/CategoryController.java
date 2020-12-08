@@ -26,10 +26,11 @@ public class CategoryController {
     private BookService bookService;
 
     @GetMapping(value = "/categories")
-    public BaseResponse getCategory(Pageable pageable){
-        Page<Category> category;
+    public BaseResponse getCategory(@RequestParam(defaultValue = "0") Integer pageNo,
+                                    @RequestParam(defaultValue = "3000") Integer pageSize){
+        List<Category> category;
         try{
-            category= categoryService.getCategory(pageable);
+            category= categoryService.getCategory(pageNo, pageSize);
         }catch(Exception e) {
             System.out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

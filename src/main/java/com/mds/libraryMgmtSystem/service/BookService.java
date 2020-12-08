@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.service;
 
 import com.mds.libraryMgmtSystem.entity.Book;
+import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +19,9 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public Page<Book> getBook(Pageable pageable) {
-       return bookRepository.findAll(pageable);
-    }
+//    public Page<Book> getBook(Pageable pageable) {
+//       return bookRepository.findAll(pageable);
+//    }
 
     public Book findById(Long id) {
         return bookRepository.findById(id).orElse(null);
@@ -39,7 +40,7 @@ public class BookService {
     }
 
     public Book addBook(Book book) {
-        return  bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     public List<Book> findByCategoryId(Long id) {
@@ -50,5 +51,15 @@ public class BookService {
         return bookRepository.findByShelfId(id);
     }
 
+    public List<Book> getBook(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
 
+        Page<Book> pagedResult = bookRepository.findAll(paging);
+
+        if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Book>();
+        }
+    }
 }

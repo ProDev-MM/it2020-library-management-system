@@ -19,6 +19,7 @@ public abstract class User{
     @Column
     private String phone;
 
+
     public Long getId() {
         return id;
     }
@@ -49,5 +50,15 @@ public abstract class User{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

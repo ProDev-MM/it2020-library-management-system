@@ -8,6 +8,7 @@ import com.mds.libraryMgmtSystem.response.BaseResponse;
 import com.mds.libraryMgmtSystem.service.LibraryCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,12 @@ public class LibraryCardController {
     private LibraryCardRepository libraryCardRepository;
 
     @GetMapping(value = "/libraryCards")
-    public BaseResponse getLibraryCard(Pageable pageable){
-        Page<LibraryCard> libraryCard;
+    public BaseResponse getLibraryCard(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "3000") Integer pageSize  ){
+        List<LibraryCard> libraryCard;
         try{
-            libraryCard= libraryCardService.getLibraryCard(pageable);
+            libraryCard= libraryCardService.getLibraryCard(pageNo, pageSize);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);

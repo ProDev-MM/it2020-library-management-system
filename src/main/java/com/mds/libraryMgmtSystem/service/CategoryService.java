@@ -1,13 +1,16 @@
 package com.mds.libraryMgmtSystem.service;
 
+import com.mds.libraryMgmtSystem.entity.Book;
 import com.mds.libraryMgmtSystem.repository.BookRepository;
 import com.mds.libraryMgmtSystem.repository.CategoryRepository;
 import com.mds.libraryMgmtSystem.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,9 +22,7 @@ public class CategoryService {
     @Autowired
     BookRepository bookRepository;
 
-    public Page<Category> getCategory(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
-    }
+
 
     public Category findById(Long id) {
         return categoryRepository.findById(id).orElse(null);
@@ -45,6 +46,19 @@ public class CategoryService {
 
     public List<Category> searchCategory(String type) {
         return categoryRepository.findByType(type);
+    }
+
+
+    public List<Category> getCategory(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+        Page<Category> pagedResult = categoryRepository.findAll(paging);
+
+        if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Category>();
+        }
     }
 }
 

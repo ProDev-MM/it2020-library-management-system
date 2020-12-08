@@ -42,10 +42,11 @@ public class RentController {
     private StudentService studentService;
 
     @GetMapping(value = "/rents")
-    public BaseResponse getRent(Pageable pageable){
-        Page<Rent> rent;
+    public BaseResponse getRent(@RequestParam(defaultValue = "0") Integer pageNo,
+                                @RequestParam(defaultValue = "10000") Integer pageSize){
+        List<Rent> rent;
         try{
-            rent= rentService.getRent(pageable);
+            rent= rentService.getRent(pageNo, pageSize);
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
