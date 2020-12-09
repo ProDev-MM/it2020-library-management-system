@@ -74,14 +74,13 @@ public class LibraryCardController {
 
             Optional<LibraryCard> rollNo = libraryCardService.findByRollNo(libraryCard.getRollNo());
              if (rollNo.isPresent() ){
-                out.println("Already RollNo Exists!");
-                return null;
+                throw new EntityExistsException("Already RollNo Exists");
             } else{
                 libraryCard = libraryCardService.addLibraryCard(libraryCard);
             }
         }catch(Exception e) {
             out.println("Error occur "+e.getMessage());
-            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+            return new BaseResponse(GlobalConstant.fail, null, e.getMessage());
         }
         return new BaseResponse(GlobalConstant.success, libraryCard, GlobalConstant.Message.success_message);
 
@@ -118,7 +117,7 @@ public class LibraryCardController {
                     libraryCard.setLogoUrl(libraryCardPojo.getLogoUrl());
                     libraryCards = libraryCardService.updateLibraryCard(libraryCard);
                 }else{
-                    throw new EntityExistsException("Already roll no exists");
+                    throw new EntityExistsException("Already rollNo Exists");
                 }
             }else{
                 throw new EntityNotFoundException(libraryCardPojo.getId()+" not found");
