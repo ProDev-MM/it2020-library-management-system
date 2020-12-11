@@ -21,7 +21,7 @@ public class ShelfController {
     @Autowired
     private ShelfService shelfService;
 
-    @GetMapping(value = "/shelfs")
+    @GetMapping(value = "/shelves")
     public BaseResponse getShelves(@RequestParam(defaultValue = "0") Integer pageNo,
                                    @RequestParam(defaultValue = "3000") Integer pageSize){
         List<Shelf> shelf;
@@ -46,7 +46,7 @@ public class ShelfController {
         return new BaseResponse(GlobalConstant.success, shelf, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping(value = "/shelf")
+    @PostMapping(value = "/create/shelf")
     public BaseResponse createShelf(@Validated @RequestBody Shelf shelf){
         try {
             shelf = shelfService.addShelf(shelf);
@@ -70,7 +70,7 @@ public class ShelfController {
 
     }
 
-    @PutMapping (value = "/shelf")
+    @PutMapping (value = "/update/shelf")
     public BaseResponse updateStudent(@Validated @RequestBody ShelfPojo shelfPojo) {
         Shelf shelves;
 

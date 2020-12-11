@@ -44,7 +44,7 @@ public class OQController {
         return new BaseResponse(GlobalConstant.success, oq, GlobalConstant.Message.success_message);
     }
 
-    @PostMapping(value = "/oq")
+    @PostMapping(value = "/create/oq")
     public BaseResponse createOQ(@Validated @RequestBody OQ oq) {
         try {
             oq = oqService.addOQ(oq);
@@ -68,7 +68,7 @@ public class OQController {
 
     }
 
-    @PutMapping(value = "/oq")
+    @PutMapping(value = "/update/oq")
     public BaseResponse updateOQ(@Validated @RequestBody OQPojo oqPojo) {
         OQ oqs;
         try {
