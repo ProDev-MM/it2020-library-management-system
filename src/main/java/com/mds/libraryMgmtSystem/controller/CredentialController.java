@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.out;
 
@@ -48,7 +49,6 @@ public class CredentialController {
         }
         return new BaseResponse(GlobalConstant.success, credential, GlobalConstant.Message.success_message);
     }
-
     @GetMapping(value = "/findByCredentialUserId/{id}")
     public BaseResponse getByUserId(@PathVariable Long id) {
         List<Credential> credential;
@@ -72,6 +72,29 @@ public class CredentialController {
         return new BaseResponse(GlobalConstant.success, null, GlobalConstant.Message.success_message);
 
     }
+
+//    @PutMapping(value = "/change/password")
+//    public BaseResponse updatePassword(@RequestBody CredentialPojo credentialPojo){
+//        Credential credentials;
+//        try {
+//            Credential credential = credentialService.findById(credentialPojo.getId());
+//            Credential optionalCredential = credentialService.findByUserId(credentialPojo.getId());
+//            out.println(optionalCredential);
+//            if (credential == null && optionalCredential.getPassword() != credentialPojo.getPassword()) {
+//                return null;
+//            }
+//            out.println(optionalCredential);
+////            credential.setEmail(credentialPojo.getEmail());
+//            String encriptedPassword = passwordEncoder.encode(credentialPojo.getPassword());
+//            credential.setPassword(encriptedPassword);
+////            credential.setRole(credentialPojo.getRole());
+//            credentials = credentialService.save(credential);
+//        }catch (Exception e) {
+//            System.out.println("Error occur " + e.getMessage());
+//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+//        }
+//        return new BaseResponse(GlobalConstant.success, credentials, GlobalConstant.Message.success_message);
+//    }
 
     @PutMapping(value = "/update/credential")
     public BaseResponse updateCredential(@Validated @RequestBody CredentialPojo credentialPojo) {
