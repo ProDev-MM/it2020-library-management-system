@@ -45,4 +45,8 @@ public class ShelfService {
             return new ArrayList<Shelf>();
         }
     }
+
+    public List<Shelf> searchShelf(String room) {
+        return shelfRepository.findByRoom(room);
+    }
 }

@@ -44,4 +44,8 @@ public class OQService {
             return new ArrayList<OQ>();
         }
     }
+
+    public List<OQ> searchSubjectName(String subject) {
+        return oqRepository.findBySubject(subject);
+    }
 }

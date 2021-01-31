@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
+import com.mds.libraryMgmtSystem.entity.OQ;
 import com.mds.libraryMgmtSystem.entity.Shelf;
 import com.mds.libraryMgmtSystem.pojo.ShelfPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
@@ -32,6 +33,19 @@ public class ShelfController {
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
         return new BaseResponse(GlobalConstant.success, shelf, GlobalConstant.Message.success_message);
+    }
+
+    @GetMapping(value="/search/shelf")
+    public BaseResponse searchName(String room){
+        List<Shelf> shelves;
+
+        try{
+            shelves = shelfService.searchShelf(room);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, shelves, GlobalConstant.Message.success_message);
     }
 
     @GetMapping(value="/shelf/{id}")

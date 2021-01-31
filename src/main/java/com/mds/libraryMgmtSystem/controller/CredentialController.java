@@ -43,6 +43,7 @@ public class CredentialController {
         Credential credential;
         try {
             credential = credentialService.findById(id);
+            out.println(credential);
         } catch (Exception e) {
             out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
@@ -73,44 +74,23 @@ public class CredentialController {
 
     }
 
-//    @PutMapping(value = "/change/password")
-//    public BaseResponse updatePassword(@RequestBody CredentialPojo credentialPojo){
-//        Credential credentials;
-//        try {
-//            Credential credential = credentialService.findById(credentialPojo.getId());
-//            Credential optionalCredential = credentialService.findByUserId(credentialPojo.getId());
-//            out.println(optionalCredential);
-//            if (credential == null && optionalCredential.getPassword() != credentialPojo.getPassword()) {
-//                return null;
-//            }
-//            out.println(optionalCredential);
-////            credential.setEmail(credentialPojo.getEmail());
-//            String encriptedPassword = passwordEncoder.encode(credentialPojo.getPassword());
-//            credential.setPassword(encriptedPassword);
-////            credential.setRole(credentialPojo.getRole());
-//            credentials = credentialService.save(credential);
-//        }catch (Exception e) {
-//            System.out.println("Error occur " + e.getMessage());
-//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
-//        }
-//        return new BaseResponse(GlobalConstant.success, credentials, GlobalConstant.Message.success_message);
-//    }
-
-    @PutMapping(value = "/update/credential")
+    @PutMapping(value = "/update/password")
     public BaseResponse updateCredential(@Validated @RequestBody CredentialPojo credentialPojo) {
         Credential credentials;
         try {
             Credential credential = credentialService.findById(credentialPojo.getId());
-            if (credential == null) {
+            Optional<Credential> optionalCredential= credentialService.findOldPassword(credential.getPassword());
+            out.println("password" + credential.getPassword());
+            out.println(optionalCredential);
+            credentialPojo.setOld_password(credential.getPassword());
+            if (!optionalCredential.isPresent() ) {
                 return null;
             }
-            credential.setEmail(credentialPojo.getEmail());
             String encriptedPassword = passwordEncoder.encode(credentialPojo.getPassword());
             credential.setPassword(encriptedPassword);
-            credential.setRole(credentialPojo.getRole());
             credentials = credentialService.save(credential);
-
-        } catch (Exception e) {
+//            credential.setEmail(credentialPojo.getEmail());
+           } catch (Exception e) {
             System.out.println("Error occur " + e.getMessage());
             return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
         }
@@ -118,4 +98,30 @@ public class CredentialController {
         return new BaseResponse(GlobalConstant.success, credentials, GlobalConstant.Message.success_message);
 
     }
+
+
+
+//    @PutMapping(value = "/update/credential")
+//    public BaseResponse updateCredential(@Validated @RequestBody CredentialPojo credentialPojo) {
+//        Credential credentials;
+//        try {
+//            Credential credential = credentialService.findById(credentialPojo.getId());
+//            out.println("password" + credential.getPassword());
+//            if (credential == null) {
+//                return null;
+//            }
+//            credential.setEmail(credentialPojo.getEmail());
+//            String encriptedPassword = passwordEncoder.encode(credentialPojo.getPassword());
+//            credential.setPassword(encriptedPassword);
+//            credential.setRole(credentialPojo.getRole());
+//            credentials = credentialService.save(credential);
+//
+//        } catch (Exception e) {
+//            System.out.println("Error occur " + e.getMessage());
+//            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+//        }
+//
+//        return new BaseResponse(GlobalConstant.success, credentials, GlobalConstant.Message.success_message);
+//
+//    }
 }

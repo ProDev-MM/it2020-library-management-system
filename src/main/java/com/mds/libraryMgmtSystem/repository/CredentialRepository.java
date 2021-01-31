@@ -18,4 +18,7 @@ public interface CredentialRepository extends JpaRepository<Credential, Long> {
 
     @Query(value = "select cr from Credential cr where cr.user.id = ?1")
     List<Credential> findByCredentialUserId(Long id);
+
+    @Query(value = "select cre from Credential cre where cre.password = ?1")
+    Optional<Credential> findOldPassword(String password);
 }

@@ -1,17 +1,22 @@
 package com.mds.libraryMgmtSystem.pojo;
 
+import com.mds.libraryMgmtSystem.entity.Credential;
 import com.mds.libraryMgmtSystem.entity.User;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
 
 public class CredentialPojo {
     private long id;
-    @NotEmpty
-    private String email;
+//    @NotEmpty
+//    private String email;
     @NotEmpty
     private String password;
+
     @NotEmpty
-    private String role;
+    private String old_password;
+//    @NotEmpty
+//    private String role;
 
     public CredentialPojo(){
 
@@ -25,12 +30,12 @@ public class CredentialPojo {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getOld_password() {
+        return old_password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setOld_password(String old_password) {
+        this.old_password = old_password;
     }
 
     public String getPassword() {
@@ -41,13 +46,6 @@ public class CredentialPojo {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
 
 }

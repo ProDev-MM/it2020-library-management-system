@@ -16,12 +16,12 @@ public class AppController {
         return ResponseEntity.ok("Hello Everyone!");
     }
 
-    @GetMapping("/user")
+    @GetMapping("/student")
     public ResponseEntity<String> staffAPI(){
         return ResponseEntity.ok("Staff but also Admin can accept this one!");
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/librarian")
     public ResponseEntity<String> managerAPI(){
         return ResponseEntity.ok("Only Admin Can accept this one!");
     }

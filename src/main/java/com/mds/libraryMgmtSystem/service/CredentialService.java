@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -37,5 +38,10 @@ public class CredentialService {
 
     public List<Credential> findByCredentialUserId(Long id) {
         return credentialRepository.findByCredentialUserId(id);
+    }
+
+
+    public Optional<Credential> findOldPassword(String password) {
+        return credentialRepository.findOldPassword(password);
     }
 }

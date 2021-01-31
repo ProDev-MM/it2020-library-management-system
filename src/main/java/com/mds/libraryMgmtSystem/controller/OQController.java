@@ -1,6 +1,7 @@
 package com.mds.libraryMgmtSystem.controller;
 
 import com.mds.libraryMgmtSystem.constant.GlobalConstant;
+import com.mds.libraryMgmtSystem.entity.LibraryCard;
 import com.mds.libraryMgmtSystem.entity.OQ;
 import com.mds.libraryMgmtSystem.pojo.OQPojo;
 import com.mds.libraryMgmtSystem.response.BaseResponse;
@@ -12,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static java.lang.System.out;
 
 @RestController
 @CrossOrigin
@@ -54,6 +57,19 @@ public class OQController {
         }
         return new BaseResponse(GlobalConstant.success, oq, GlobalConstant.Message.success_message);
 
+    }
+
+    @GetMapping(value="/search/oq/name")
+    public BaseResponse searchSubject(String subject){
+        List<OQ> oqList;
+
+        try{
+            oqList = oqService.searchSubjectName(subject);
+        }catch(Exception e) {
+            out.println("Error occur "+e.getMessage());
+            return new BaseResponse(GlobalConstant.fail, null, GlobalConstant.Message.fail_message);
+        }
+        return new BaseResponse(GlobalConstant.success, oqList, GlobalConstant.Message.success_message);
     }
 
     @DeleteMapping(value = "/oq/{id}")
